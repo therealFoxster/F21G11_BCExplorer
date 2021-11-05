@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.bottom_nav_home:
-                    // TODO: Start fragment/activity from here
+                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new HomeFragment()).commit();
 
                     // Test toast
                     currentToast = Toast.makeText(MainActivity.this, "Home fragment to be implemented", Toast.LENGTH_SHORT);
@@ -34,31 +34,27 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.bottom_nav_saved:
                     // TODO: Start fragment/activity from here
+                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
                     // Test toast
                     currentToast = Toast.makeText(MainActivity.this, "Saved fragment to be implemented", Toast.LENGTH_SHORT);
 
                     break;
-                case R.id.bottom_nav_settings:
-                    // TODO: Start fragment/activity from here
-
-                    // Test toast
-                    currentToast = Toast.makeText(MainActivity.this, "Settings fragment to be implemented", Toast.LENGTH_SHORT);
-
-                    break;
                 case R.id.bottom_nav_info:
                     // TODO: Start fragment/activity from here
+                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
                     // Test toast
                     currentToast = Toast.makeText(MainActivity.this, "Info fragment to be implemented", Toast.LENGTH_SHORT);
 
                     break;
             }
-
-            currentToast.setMargin(0, 100);
-            currentToast.show();
+//            currentToast.show();
 
             return true;
         });
+
+        // Show home page at start
+        bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
     }
 }

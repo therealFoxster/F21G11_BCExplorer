@@ -10,11 +10,11 @@
         android:enabled="true"
         android:icon="@drawable/ic_bottom_nav_saved_foreground"
         android:title="Saved"/>
-    <item
-        android:id="@+id/bottom_nav_settings"
-        android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_settings_foreground"
-        android:title="Settings"/>
+<!--    <item-->
+<!--        android:id="@+id/bottom_nav_settings"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_bottom_nav_settings_foreground"-->
+<!--        android:title="Settings"/>-->
     <item
         android:id="@+id/bottom_nav_info"
         android:enabled="true"
