@@ -1,6 +1,7 @@
 package com.example.bcexplorer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener((@NonNull MenuItem item) -> {
             if (currentToast != null)
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.bottom_nav_home:
+                    actionBar.setTitle("Home");
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new HomeFragment()).commit();
 
                     // Test toast
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.bottom_nav_saved:
+                    actionBar.setTitle("Saved");
+
                     // TODO: Start fragment/activity from here
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
@@ -41,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.bottom_nav_info:
+                    actionBar.setTitle("Information");
+
                     // TODO: Start fragment/activity from here
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
