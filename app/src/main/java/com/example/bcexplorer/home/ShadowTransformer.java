@@ -39,14 +39,12 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
             return;
 
         CardView currentCard = adapter.getCardViewAt(currentPosition);
-        if (currentCard != null) {
+        if (currentCard != null)
             currentCard.setCardElevation(baseElevation + baseElevation * (CardAdapterInterface.MAX_ELEVATION_FACTOR - 1) * (1 - offset));
-        }
 
         CardView nextCard = adapter.getCardViewAt(nextPosition);
-        if (nextCard != null) {
+        if (nextCard != null)
             nextCard.setCardElevation(baseElevation + baseElevation * (CardAdapterInterface.MAX_ELEVATION_FACTOR - 1) * (offset));
-        }
 
         lastOffset = positionOffset;
     }

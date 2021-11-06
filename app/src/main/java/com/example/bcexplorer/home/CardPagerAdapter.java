@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 
 import java.util.ArrayList;
@@ -69,10 +71,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapterInterfa
 
         CardView cardView = view.findViewById(R.id.cardView);
 
-        if (baseElevation == 0) {
+        if (baseElevation == 0)
             baseElevation = cardView.getCardElevation();
-        }
 
+        cardView.setOnClickListener(cardItem.getOnClickListener());
         cardView.setMaxCardElevation(baseElevation * MAX_ELEVATION_FACTOR);
         cardViewList.set(position, cardView);
 
