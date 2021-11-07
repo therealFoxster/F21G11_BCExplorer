@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.bcexplorer.home.CardFragmentPagerAdapter;
 import com.example.bcexplorer.home.CardItem;
 import com.example.bcexplorer.home.CardPagerAdapter;
 import com.example.bcexplorer.home.ShadowTransformer;
@@ -29,16 +28,12 @@ public class HomeFragment extends Fragment {
     private ViewPager viewPagerFeatured;
     private CardPagerAdapter cardPagerAdapterFeatured;
     private ShadowTransformer cardPagerShadowTransformerFeatured;
-    private CardFragmentPagerAdapter cardFragmentPagerAdapterFeatured;
-    private ShadowTransformer cardFragmentShadowTransformerFeatured;
     private int currentCardFeatured = 0;
 
     // Popular section
     private ViewPager viewPagerPopular;
     private CardPagerAdapter cardPagerAdapterPopular;
     private ShadowTransformer cardPagerShadowTransformerPopular;
-    private CardFragmentPagerAdapter cardFragmentPagerAdapterPopular;
-    private ShadowTransformer cardFragmentShadowTransformerPopular;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +43,6 @@ public class HomeFragment extends Fragment {
         // Featured section
         viewPagerFeatured = view.findViewById(R.id.viewPagerHomeFeatured);
         setupFeatured();
-        startCardAutoScroll();
 
         // Popular section
         viewPagerPopular = view.findViewById(R.id.viewPagerHomePopular);
@@ -72,18 +66,13 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
         cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
-        cardFragmentPagerAdapterFeatured = new CardFragmentPagerAdapter(getActivity().getSupportFragmentManager(), 2 * (getActivity().getResources().getDisplayMetrics().density));
-
-        // Transformers
+        // Transformer
         cardPagerShadowTransformerFeatured = new ShadowTransformer(viewPagerFeatured, cardPagerAdapterFeatured);
-        cardFragmentShadowTransformerFeatured = new ShadowTransformer(viewPagerFeatured, cardFragmentPagerAdapterFeatured);
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
         viewPagerFeatured.setPageTransformer(false, cardPagerShadowTransformerFeatured);
-    }
 
-    private void startCardAutoScroll() {
-        Timer timer;
+        // Start card autoscroll
         final long DELAY_MS = 500; // Delay before task is executed
         final long PERIOD_MS = 2500; // Time between task executions
         final Handler handler = new Handler();
@@ -94,7 +83,7 @@ public class HomeFragment extends Fragment {
             viewPagerFeatured.setCurrentItem(currentCardFeatured++, true);
         };
 
-        timer = new Timer(); // New thread
+        Timer timer = new Timer(); // New thread
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -114,7 +103,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-
     }
 
     private void setupPopular() {
@@ -123,14 +111,9 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
-        cardFragmentPagerAdapterPopular = new CardFragmentPagerAdapter(getActivity().getSupportFragmentManager(), 2 * (getActivity().getResources().getDisplayMetrics().density));
-
-        // Transformers
+        // Transformer
         cardPagerShadowTransformerPopular = new ShadowTransformer(viewPagerPopular, cardPagerAdapterPopular);
-        cardFragmentShadowTransformerPopular= new ShadowTransformer(viewPagerPopular, cardFragmentPagerAdapterPopular);
 
         viewPagerPopular.setAdapter(cardPagerAdapterPopular);
         viewPagerPopular.setPageTransformer(false, cardPagerShadowTransformerPopular);
