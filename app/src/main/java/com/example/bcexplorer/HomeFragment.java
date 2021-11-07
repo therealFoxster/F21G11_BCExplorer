@@ -66,11 +66,11 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterFeatured = new CardPagerAdapter();
 
         // Adding cards to pager adapter
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
         cardFragmentPagerAdapterFeatured = new CardFragmentPagerAdapter(getActivity().getSupportFragmentManager(), 2 * (getActivity().getResources().getDisplayMetrics().density));
 
@@ -120,11 +120,11 @@ public class HomeFragment extends Fragment {
     private void setupPopular() {
         cardPagerAdapterPopular = new CardPagerAdapter();
 
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text, onClickListenerDummy));
+        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
         cardFragmentPagerAdapterPopular = new CardFragmentPagerAdapter(getActivity().getSupportFragmentManager(), 2 * (getActivity().getResources().getDisplayMetrics().density));
 

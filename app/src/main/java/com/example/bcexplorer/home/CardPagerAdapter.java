@@ -22,16 +22,23 @@ import java.util.List;
 public class CardPagerAdapter extends PagerAdapter implements CardAdapterInterface {
     private List<CardView> cardViewList;
     private List<CardItem> cardItemList;
+    private List<View.OnClickListener> onClickListenerList;
     private float baseElevation;
 
     public CardPagerAdapter() {
         cardViewList = new ArrayList<>();
         cardItemList = new ArrayList<>();
+        onClickListenerList = new ArrayList<>();
+    }
+
+    public void addCardItem(CardItem cardItem, View.OnClickListener onClickListener) {
+        cardViewList.add(null);
+        cardItemList.add(cardItem);
+        onClickListenerList.add(onClickListener);
     }
 
     public void addCardItem(CardItem cardItem) {
-        cardViewList.add(null);
-        cardItemList.add(cardItem);
+        addCardItem(cardItem, null);
     }
 
     @Override
@@ -74,7 +81,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapterInterfa
         if (baseElevation == 0)
             baseElevation = cardView.getCardElevation();
 
-        cardView.setOnClickListener(cardItem.getOnClickListener());
+        if (onClickListenerList.get(position) != null) // If onClickListener exists for current CardView
+            cardView.setOnClickListener(onClickListenerList.get(position));
         cardView.setMaxCardElevation(baseElevation * MAX_ELEVATION_FACTOR);
         cardViewList.set(position, cardView);
 
