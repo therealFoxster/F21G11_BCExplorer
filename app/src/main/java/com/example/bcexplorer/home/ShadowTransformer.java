@@ -8,19 +8,19 @@ import androidx.viewpager.widget.ViewPager;
 
 public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
     private ViewPager viewPager;
-    private CardAdapterInterface adapter; // Adapter object that implements CardAdapterInterface
+    private CardPagerAdapter cardPagerAdapter; // Adapter object that implements CardAdapterInterface
     private float lastOffset;
 
-    public ShadowTransformer(ViewPager viewPager, CardAdapterInterface adapter) {
+    public ShadowTransformer(ViewPager viewPager, CardPagerAdapter cardPagerAdapter) {
         this.viewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
-        this.adapter = adapter;
+        this.cardPagerAdapter = cardPagerAdapter;
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         int currentPosition, nextPosition;
-        float baseElevation = adapter.getBaseElevation();
+        float baseElevation = cardPagerAdapter.getBaseElevation();
         float offset;
         boolean goingLeft = lastOffset > positionOffset; // Going left if the last offset is greater than the offset going to
 
@@ -35,16 +35,16 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         }
 
         // End execution if the current or next position is greater than the number of adapters (overscroll) to prevent crash
-        if (currentPosition > adapter.getCount() - 1 || nextPosition > adapter.getCount() - 1)
+        if (currentPosition > cardPagerAdapter.getCount() - 1 || nextPosition > cardPagerAdapter.getCount() - 1)
             return;
 
-        CardView currentCard = adapter.getCardViewAt(currentPosition);
+        CardView currentCard = cardPagerAdapter.getCardViewAt(currentPosition);
         if (currentCard != null)
-            currentCard.setCardElevation(baseElevation + baseElevation * (CardAdapterInterface.MAX_ELEVATION_FACTOR - 1) * (1 - offset));
+            currentCard.setCardElevation(baseElevation + baseElevation * (CardPagerAdapter.MAX_ELEVATION_FACTOR - 1) * (1 - offset));
 
-        CardView nextCard = adapter.getCardViewAt(nextPosition);
+        CardView nextCard = cardPagerAdapter.getCardViewAt(nextPosition);
         if (nextCard != null)
-            nextCard.setCardElevation(baseElevation + baseElevation * (CardAdapterInterface.MAX_ELEVATION_FACTOR - 1) * (offset));
+            nextCard.setCardElevation(baseElevation + baseElevation * (CardPagerAdapter.MAX_ELEVATION_FACTOR - 1) * (offset));
 
         lastOffset = positionOffset;
     }

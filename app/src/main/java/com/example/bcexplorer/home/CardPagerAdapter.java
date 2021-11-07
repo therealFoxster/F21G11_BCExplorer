@@ -19,11 +19,13 @@ import com.example.bcexplorer.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardPagerAdapter extends PagerAdapter implements CardAdapterInterface {
+public class CardPagerAdapter extends PagerAdapter {
     private List<CardView> cardViewList;
     private List<CardItem> cardItemList;
     private List<View.OnClickListener> onClickListenerList;
+
     private float baseElevation;
+    public static int MAX_ELEVATION_FACTOR = 1; // Increase to make the CardView smaller
 
     public CardPagerAdapter() {
         cardViewList = new ArrayList<>();
@@ -41,17 +43,14 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapterInterfa
         addCardItem(cardItem, null);
     }
 
-    @Override
     public float getBaseElevation() {
         return baseElevation;
     }
 
-    @Override
     public CardView getCardViewAt(int position) {
         return cardViewList.get(position);
     }
 
-    @Override
     public int getCount() {
         return cardViewList.size();
     }
