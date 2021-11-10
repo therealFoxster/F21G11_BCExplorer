@@ -31,33 +31,22 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bottom_nav_home:
                     actionBar.setTitle("Home");
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new HomeFragment()).commit();
-
-                    // Test toast
-                    currentToast = Toast.makeText(MainActivity.this, "Home fragment to be implemented", Toast.LENGTH_SHORT);
-
                     break;
                 case R.id.bottom_nav_saved:
                     actionBar.setTitle("Saved");
-
-                    // TODO: Start fragment/activity from here
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
-                    // Test toast
-                    currentToast = Toast.makeText(MainActivity.this, "Saved fragment to be implemented", Toast.LENGTH_SHORT);
+                    // TODO: Start fragment/activity from here
 
                     break;
                 case R.id.bottom_nav_info:
                     actionBar.setTitle("Information");
-
-                    // TODO: Start fragment/activity from here
                     getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
 
-                    // Test toast
-                    currentToast = Toast.makeText(MainActivity.this, "Info fragment to be implemented", Toast.LENGTH_SHORT);
+                    // TODO: Start fragment/activity from here
 
                     break;
             }
-//            currentToast.show();
 
             return true;
         });

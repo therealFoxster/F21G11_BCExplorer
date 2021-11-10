@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.bcexplorer.home.CardItem;
 import com.example.bcexplorer.home.CardPagerAdapter;
-import com.example.bcexplorer.home.ShadowTransformer;
+import com.example.bcexplorer.home.Transformer;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,13 +27,13 @@ public class HomeFragment extends Fragment {
     // Featured section
     private ViewPager viewPagerFeatured;
     private CardPagerAdapter cardPagerAdapterFeatured;
-    private ShadowTransformer cardPagerShadowTransformerFeatured;
+    private Transformer cardPagerTransformerFeatured;
     private int currentCardFeatured = 0;
 
     // Popular section
     private ViewPager viewPagerPopular;
     private CardPagerAdapter cardPagerAdapterPopular;
-    private ShadowTransformer cardPagerShadowTransformerPopular;
+    private Transformer cardPagerTransformerPopular;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,10 +67,10 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
         // Transformer
-        cardPagerShadowTransformerFeatured = new ShadowTransformer(viewPagerFeatured, cardPagerAdapterFeatured);
+        cardPagerTransformerFeatured = new Transformer(viewPagerFeatured, cardPagerAdapterFeatured);
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
-        viewPagerFeatured.setPageTransformer(false, cardPagerShadowTransformerFeatured);
+        viewPagerFeatured.setPageTransformer(false, cardPagerTransformerFeatured);
 
         // Start card autoscroll
         final long DELAY_MS = 500; // Delay before task is executed
@@ -113,10 +113,10 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
         // Transformer
-        cardPagerShadowTransformerPopular = new ShadowTransformer(viewPagerPopular, cardPagerAdapterPopular);
+        cardPagerTransformerPopular = new Transformer(viewPagerPopular, cardPagerAdapterPopular);
 
         viewPagerPopular.setAdapter(cardPagerAdapterPopular);
-        viewPagerPopular.setPageTransformer(false, cardPagerShadowTransformerPopular);
+        viewPagerPopular.setPageTransformer(false, cardPagerTransformerPopular);
     }
 
     // TODO: Rename parameter arguments, choose names that match
