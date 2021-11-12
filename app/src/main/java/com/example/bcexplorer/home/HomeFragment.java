@@ -1,4 +1,4 @@
-package com.example.bcexplorer;
+package com.example.bcexplorer.home;
 
 import android.os.Bundle;
 
@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.bcexplorer.home.CardItem;
-import com.example.bcexplorer.home.CardPagerAdapter;
-import com.example.bcexplorer.home.Transformer;
+import com.example.bcexplorer.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

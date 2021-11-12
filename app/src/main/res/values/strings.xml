@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">BCExplorer</string>
+
+    <!-- Home -->
     <string name="sample_title">Title</string>
     <string name="sample_text">The quick brown fox jumps over the lazy dog</string>
     <string name="textViewHomeFeatured">Our Favorite Spots</string>
-    <string name="textViewHomePopular">Popular Locations</string>Categories
+    <string name="textViewHomePopular">Popular Locations</string>
     <string name="textViewHomeCategories">Categories</string>
+
+    <!-- Info -->
+    <string name="app_version">BCExplorer v1.0</string>
+    <string name="source_code">Source code</string>
+    <string name="contact_us">Contact us</string>
+    <string name="credits">Credits</string>
+    <string name="repo_url">https://github.com/huybui-dc/F21G11_BCExplorer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">
@@ -12,4 +21,5 @@
         blank
         fragment
     </string>
+    <string name="hello_word">Hello, World!</string>
 </resources>

@@ -4,10 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.bcexplorer.home.HomeFragment;
+import com.example.bcexplorer.info.InfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.bottom_nav_info:
                     actionBar.setTitle("Information");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new InfoFragment()).commit();
 
                     // TODO: Start fragment/activity from here
 
