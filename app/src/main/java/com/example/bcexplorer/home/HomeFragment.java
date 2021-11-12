@@ -25,13 +25,11 @@ public class HomeFragment extends Fragment {
     // Featured section
     private ViewPager viewPagerFeatured;
     private CardPagerAdapter cardPagerAdapterFeatured;
-    private Transformer cardPagerTransformerFeatured;
     private int currentCardFeatured = 0;
 
     // Popular section
     private ViewPager viewPagerPopular;
     private CardPagerAdapter cardPagerAdapterPopular;
-    private Transformer cardPagerTransformerPopular;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,11 +62,7 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
         cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
-        // Transformer
-        cardPagerTransformerFeatured = new Transformer(viewPagerFeatured, cardPagerAdapterFeatured);
-
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
-        viewPagerFeatured.setPageTransformer(false, cardPagerTransformerFeatured);
 
         // Start card autoscroll
         final long DELAY_MS = 500; // Delay before task is executed
@@ -110,11 +104,7 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
         cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
 
-        // Transformer
-        cardPagerTransformerPopular = new Transformer(viewPagerPopular, cardPagerAdapterPopular);
-
         viewPagerPopular.setAdapter(cardPagerAdapterPopular);
-        viewPagerPopular.setPageTransformer(false, cardPagerTransformerPopular);
     }
 
     // TODO: Rename parameter arguments, choose names that match
