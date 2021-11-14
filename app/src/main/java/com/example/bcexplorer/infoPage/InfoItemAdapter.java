@@ -1,15 +1,12 @@
-package com.example.bcexplorer.info;
+package com.example.bcexplorer.infoPage;
 
-import android.app.UiAutomation;
 import android.graphics.Color;
-import android.icu.text.IDNA;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bcexplorer.R;
 

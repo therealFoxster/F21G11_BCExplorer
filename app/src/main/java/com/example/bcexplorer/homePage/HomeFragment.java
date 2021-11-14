@@ -1,4 +1,4 @@
-package com.example.bcexplorer.home;
+package com.example.bcexplorer.homePage;
 
 import android.os.Bundle;
 
@@ -56,11 +56,11 @@ public class HomeFragment extends Fragment {
         cardPagerAdapterFeatured = new CardPagerAdapter();
 
         // Adding cards to pager adapter
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title1, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title2, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title3, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title4, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title5, R.string.sample_text), onClickListenerDummy);
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
 

@@ -1,4 +1,4 @@
-package com.example.bcexplorer.info;
+package com.example.bcexplorer.infoPage;
 
 public class InfoItem {
     private int iconImageResource;

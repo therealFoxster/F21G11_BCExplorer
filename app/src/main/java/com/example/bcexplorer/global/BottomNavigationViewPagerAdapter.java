@@ -1,4 +1,4 @@
-package com.example.bcexplorer;
+package com.example.bcexplorer.global;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

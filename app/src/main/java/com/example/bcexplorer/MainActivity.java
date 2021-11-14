@@ -8,10 +8,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.bcexplorer.home.HomeFragment;
-import com.example.bcexplorer.info.InfoFragment;
+import com.example.bcexplorer.global.BottomNavigationViewPagerAdapter;
+import com.example.bcexplorer.homePage.HomeFragment;
+import com.example.bcexplorer.infoPage.InfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

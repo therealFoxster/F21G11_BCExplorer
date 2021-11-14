@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".info.InfoFragment"
-    android:paddingBottom="@dimen/design_bottom_navigation_height">
+    tools:context=".infoPage.InfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="@string/app_version"
+        android:text="@string/hello_word"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

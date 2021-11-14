@@ -1,6 +1,4 @@
-package com.example.bcexplorer.home;
-
-import android.view.View;
+package com.example.bcexplorer.homePage;
 
 public class CardItem {
     private int titleResource, textResource, imageResource;

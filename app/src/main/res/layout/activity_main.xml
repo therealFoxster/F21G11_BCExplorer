@@ -14,7 +14,8 @@
         android:layout_above="@+id/bottomNavigationView"
         android:layout_alignParentTop="true"
         android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="@dimen/design_bottom_navigation_height"/>
 
     <!-- Code to color bottom navigation; else it will be white/transparent -->
     <!-- style="@style/Widget.MaterialComponents.BottomNavigationView.Colored" -->

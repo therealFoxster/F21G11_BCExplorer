@@ -3,6 +3,11 @@
 
     <!-- Home -->
     <string name="sample_title">Title</string>
+    <string name="title1">Card 1</string>
+    <string name="title2">Card 2</string>
+    <string name="title3">Card 3</string>
+    <string name="title4">Card 4</string>
+    <string name="title5">Card 5</string>
     <string name="sample_text">The quick brown fox jumps over the lazy dog</string>
     <string name="textViewHomeFeatured">Our Favorite Spots</string>
     <string name="textViewHomePopular">Popular Locations</string>
