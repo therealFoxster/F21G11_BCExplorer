@@ -1,5 +1,6 @@
 package com.example.bcexplorer.homePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.bcexplorer.Constants;
+import com.example.bcexplorer.ListDetailActivity;
 import com.example.bcexplorer.R;
 
 import java.util.Timer;
@@ -35,6 +38,28 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for home fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        view.findViewById(R.id.whiteRockCardView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), ListDetailActivity.class)
+                        .putExtra(Constants.PARAMS, Constants.WHITE_ROCK));
+            }
+        });
+        view.findViewById(R.id.vancouverCardView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), ListDetailActivity.class)
+                        .putExtra(Constants.PARAMS, Constants.VANCOUVER));
+            }
+        });
+        view.findViewById(R.id.whistlerCardView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(requireContext(), ListDetailActivity.class)
+                        .putExtra(Constants.PARAMS, Constants.WHISTLER));
+            }
+        });
 
         // Featured section
         viewPagerFeatured = view.findViewById(R.id.viewPagerHomeFeatured);

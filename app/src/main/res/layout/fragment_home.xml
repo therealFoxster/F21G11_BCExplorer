@@ -70,6 +70,94 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/card_view"
+                        android:id="@+id/whiteRockCardView"
+                        android:layout_marginStart="20dp"
+                        app:cardCornerRadius="15dp">
+
+                        <ImageView
+                            style="@style/image_view"
+                            android:src="@drawable/white_rock" />
+
+                        <LinearLayout style="@style/card_text_bg">
+
+                            <TextView
+                                style="@style/headertext"
+                                android:text="White Rock" />
+
+                            <TextView
+                                style="@style/desctext"
+                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/card_view"
+                        android:id="@+id/vancouverCardView"
+                        android:layout_marginHorizontal="20dp"
+                        app:cardCornerRadius="15dp">
+
+                        <ImageView
+                            style="@style/image_view"
+                            android:src="@drawable/vancouver" />
+
+                        <LinearLayout style="@style/card_text_bg">
+
+                            <TextView
+                                style="@style/headertext"
+                                android:text="Downtown Vancouver" />
+
+                            <TextView
+                                style="@style/desctext"
+                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/card_view"
+                        android:id="@+id/whistlerCardView"
+                        android:layout_marginEnd="20dp"
+                        app:cardCornerRadius="15dp">
+
+                        <ImageView
+                            style="@style/image_view"
+                            android:src="@drawable/whistler" />
+
+                        <LinearLayout style="@style/card_text_bg">
+
+                            <TextView
+                                style="@style/headertext"
+                                android:text="Whistler" />
+
+                            <TextView
+                                style="@style/desctext"
+                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerHomePopular"
                 android:layout_width="match_parent"
