@@ -2,7 +2,9 @@ package com.example.bcexplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.bcexplorer.databinding.ActivityListDetailBinding;
 
@@ -44,5 +46,32 @@ public class ListDetailActivity extends AppCompatActivity {
             b.gettingAroundText.setText("Getting Around\nWhistler");
             b.whatsNewText.setText("What's New in\nWhistler");
         }
+
+        b.exploreBtn.setOnClickListener(exploreBtnClickListener());
+        b.readMoreBtn.setOnClickListener(readMoreBtnClickListener());
+
+    }
+
+    private View.OnClickListener readMoreBtnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ListDetailActivity.this, ExploreActivity.class)
+                        .putExtra(Constants.PARAMS, LIST_TYPE));
+
+            }
+        };
+    }
+
+    private View.OnClickListener exploreBtnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(ListDetailActivity.this, ReadMoreActivity.class)
+                        .putExtra(Constants.PARAMS, LIST_TYPE));
+
+            }
+        };
     }
 }
