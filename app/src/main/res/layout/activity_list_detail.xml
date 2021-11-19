@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListDetailActivity">
-<<<<<<< HEAD
+
   <RelativeLayout
       android:id="@+id/top_layout_bottom_activity"
       android:layout_width="match_parent"
@@ -145,7 +145,4 @@
         app:backgroundTint="@color/black" />
 
   </LinearLayout>
-=======
->>>>>>> origin/master
-
   </androidx.constraintlayout.widget.ConstraintLayout>
