@@ -4,20 +4,34 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.bcexplorer.database.AppDatabase;
+import com.example.bcexplorer.database.Location;
+import com.example.bcexplorer.database.LocationDAO;
 import com.example.bcexplorer.global.BottomNavigationViewPagerAdapter;
 import com.example.bcexplorer.homePage.HomeFragment;
 import com.example.bcexplorer.infoPage.InfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     ViewPager2 bottomNavigationViewPager;
+    public static AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
+        setupDatabase();
         setupViewPager();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -72,4 +87,15 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationViewPager.setAdapter(bottomNavigationViewPagerAdapter);
         bottomNavigationViewPager.setUserInputEnabled(false);
     }
+
+    private void setupDatabase() {
+        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "BCExplorer.db").createFromAsset("database/BCExplorer_init.db").build();
+
+        // Making sure the database is created from init database file
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            database.locationDAO().getAllLocations();
+        });
+    }
+
 }

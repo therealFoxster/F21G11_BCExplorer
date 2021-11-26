@@ -86,6 +86,7 @@
                         style="@style/card_view"
                         android:id="@+id/whiteRockCardView"
                         android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
                         app:cardCornerRadius="15dp">
 
                         <ImageView
@@ -134,6 +135,7 @@
                         style="@style/card_view"
                         android:id="@+id/whistlerCardView"
                         android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
                         app:cardCornerRadius="15dp">
 
                         <ImageView
@@ -161,7 +163,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerHomePopular"
                 android:layout_width="match_parent"
-                android:layout_height="325dp"
+                android:layout_height="0dp"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="5dp"
                 android:clipToPadding="false"

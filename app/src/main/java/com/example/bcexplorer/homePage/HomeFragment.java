@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,17 @@ import android.widget.Toast;
 
 import com.example.bcexplorer.Constants;
 import com.example.bcexplorer.ListDetailActivity;
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
+import com.example.bcexplorer.database.Location;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,7 +75,7 @@ public class HomeFragment extends Fragment {
 
         // Popular section
         viewPagerPopular = view.findViewById(R.id.viewPagerHomePopular);
-        setupPopular();
+//        setupPopular();
 
         return view;
     }
@@ -80,12 +88,33 @@ public class HomeFragment extends Fragment {
     private void setupFeatured() {
         cardPagerAdapterFeatured = new CardPagerAdapter();
 
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            // Randomize cards
+            int numberOfCards = 5;
+            List<Integer> numbers = new ArrayList<>();
+
+            for (int i = 1; i <= numberOfCards; i++)
+                numbers.add(i);
+
+            Collections.shuffle(numbers);
+            for (int i = 0; i < numberOfCards; i++) {
+                Location location = MainActivity.database.locationDAO().getLocationWithID("" + numbers.get(i));
+                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
+            }
+
+//            List<Location> locations = MainActivity.database.locationDAO().getAllLocations();
+//            for (Location location: locations) {
+//                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
+//            }
+        });
+
         // Adding cards to pager adapter
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title1, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title2, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title3, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title4, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterFeatured.addCardItem(new CardItem(R.string.title5, R.string.sample_text), onClickListenerDummy);
+//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title1), getString(R.string.sample_text)), onClickListenerDummy);
+//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title2), getString(R.string.sample_text)), onClickListenerDummy);
+//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title3), getString(R.string.sample_text)), onClickListenerDummy);
+//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title4), getString(R.string.sample_text)), onClickListenerDummy);
+//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title5), getString(R.string.sample_text)), onClickListenerDummy);
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
 
@@ -123,11 +152,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupPopular() {
+        // Setting viewPager's height to 325dp
+        ViewGroup.LayoutParams layoutParams = viewPagerPopular.getLayoutParams();
+        layoutParams.height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 325,getResources().getDisplayMetrics()));
+        viewPagerPopular.setLayoutParams(layoutParams);
+
         cardPagerAdapterPopular = new CardPagerAdapter();
 
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(R.string.sample_title, R.string.sample_text), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
+        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
 
         viewPagerPopular.setAdapter(cardPagerAdapterPopular);
     }

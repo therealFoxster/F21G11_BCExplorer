@@ -3,6 +3,7 @@ package com.example.bcexplorer.homePage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class CardPagerAdapter extends PagerAdapter {
         cardViewList.add(null);
         cardItemList.add(cardItem);
         onClickListenerList.add(onClickListener);
+        notifyDataSetChanged();
     }
 
     public void addCardItem(CardItem cardItem) {
@@ -62,13 +64,14 @@ public class CardPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.card_view, container, false);
         container.addView(view);
 
-        // Setting card title and content
+        // Setting card title, subtitle and background
         CardItem cardItem = cardItemList.get(position);
-        TextView textViewTitle = view.findViewById(R.id.textViewTitle);
-        TextView textViewContent = view.findViewById(R.id.textViewContent);
-        textViewTitle.setText(cardItem.getTitleResource());
-        textViewContent.setText(cardItem.getTextResource());
-        // TODO: Set card background image (ImageView)
+        TextView textViewTitle = view.findViewById(R.id.textViewCardTitle);
+        TextView textViewContent = view.findViewById(R.id.textViewCardSubtitle);
+        ImageView imageViewCardBackground = view.findViewById(R.id.imageViewCardBackground);
+        textViewTitle.setText(cardItem.getTitle());
+        textViewContent.setText(cardItem.getCategory());
+        imageViewCardBackground.setImageResource(container.getContext().getResources().getIdentifier(cardItem.getImageName(), "drawable",container.getContext().getPackageName()));
 
         CardView cardView = view.findViewById(R.id.cardView);
 
