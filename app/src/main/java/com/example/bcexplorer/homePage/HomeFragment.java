@@ -86,6 +86,12 @@ public class HomeFragment extends Fragment {
     };
 
     private void setupFeatured() {
+        // Setting viewPager's height to 222dp
+        int heightDP = 222;
+        ViewGroup.LayoutParams layoutParams = viewPagerFeatured.getLayoutParams();
+        layoutParams.height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightDP, getResources().getDisplayMetrics()));
+        viewPagerFeatured.setLayoutParams(layoutParams);
+
         cardPagerAdapterFeatured = new CardPagerAdapter();
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -108,13 +114,6 @@ public class HomeFragment extends Fragment {
 //                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
 //            }
         });
-
-        // Adding cards to pager adapter
-//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title1), getString(R.string.sample_text)), onClickListenerDummy);
-//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title2), getString(R.string.sample_text)), onClickListenerDummy);
-//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title3), getString(R.string.sample_text)), onClickListenerDummy);
-//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title4), getString(R.string.sample_text)), onClickListenerDummy);
-//        cardPagerAdapterFeatured.addCardItem(new CardItem(getString(R.string.title5), getString(R.string.sample_text)), onClickListenerDummy);
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
 

@@ -11,19 +11,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.bcexplorer.database.AppDatabase;
-import com.example.bcexplorer.database.Location;
-import com.example.bcexplorer.database.LocationDAO;
 import com.example.bcexplorer.global.BottomNavigationViewPagerAdapter;
 import com.example.bcexplorer.homePage.HomeFragment;
 import com.example.bcexplorer.infoPage.InfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -91,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupDatabase() {
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "BCExplorer.db").createFromAsset("database/BCExplorer_init.db").build();
 
-        // Making sure the database is created from init database file
+        // Making sure the database is properly created from init database file
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             database.locationDAO().getAllLocations();
