@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/activity_explore.xml" value="0.2128623188405797" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/activity_list_detail.xml" value="0.1641337386018237" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/activity_main.xml" value="0.2128623188405797" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/activity_map_fragment.xml" value="0.3323076923076923" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/fragment_map.xml" value="0.1" />
+        <entry key="..\:/F21G11_BCExplorer/app/src/main/res/layout/info_item.xml" value="0.1925925925925926" />
         <entry key="app/src/main/res/drawable/alpha_gradient.xml" value="0.3963541666666667" />
         <entry key="app/src/main/res/layout/activity_explore.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_list_detail.xml" value="0.14166666666666666" />

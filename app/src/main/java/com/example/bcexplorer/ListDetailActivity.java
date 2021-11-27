@@ -56,7 +56,7 @@ public class ListDetailActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ListDetailActivity.this, ExploreActivity.class)
+                startActivity(new Intent(ListDetailActivity.this, ReadMoreActivity.class)
                         .putExtra(Constants.PARAMS, LIST_TYPE));
 
             }
@@ -68,7 +68,7 @@ public class ListDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(ListDetailActivity.this, ReadMoreActivity.class)
+                startActivity(new Intent(ListDetailActivity.this, ExploreActivity.class)
                         .putExtra(Constants.PARAMS, LIST_TYPE));
 
             }
