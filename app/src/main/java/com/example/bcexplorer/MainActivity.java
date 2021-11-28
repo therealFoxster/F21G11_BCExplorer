@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewPagerAdapter bottomNavigationViewPagerAdapter = new BottomNavigationViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
 
         Fragment homeFragment = new HomeFragment();
-        Fragment savedFragment = new BlankFragment();
+
+        Fragment savedFragment = new SavedFragment();
+
         Fragment infoFragment = new InfoFragment();
 
         bottomNavigationViewPagerAdapter.addFragment(homeFragment);

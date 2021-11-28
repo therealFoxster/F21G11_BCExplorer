@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".ListDetailActivity">
 
   <RelativeLayout
@@ -17,8 +17,10 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="20dp"
-        android:src="@drawable/heart"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/saveBtnExplore"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_bookmark_unselected_24"
         app:tint="@color/gray" />
 
     <TextView
@@ -145,4 +147,5 @@
         app:backgroundTint="@color/black" />
 
   </LinearLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

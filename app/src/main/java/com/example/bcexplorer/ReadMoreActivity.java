@@ -2,9 +2,13 @@ package com.example.bcexplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.bcexplorer.databinding.ActivityReadMoreBinding;
+import com.example.bcexplorer.utils.Utils;
 
 public class ReadMoreActivity extends AppCompatActivity {
     private ActivityReadMoreBinding b;
@@ -41,5 +45,35 @@ public class ReadMoreActivity extends AppCompatActivity {
             GETTING_AROUND_LIST_TYPE = Constants.GETTING_AROUND_WHISTLER;
         }
 
+        Context context = ReadMoreActivity.this;
+
+        if (Utils.getBoolean(context, GETTING_AROUND_LIST_TYPE, false)) {
+            b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_selected_24);
+            isSaved = true;
+        }
+        b.saveBtnExplore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isSaved) {
+                    b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_unselected_24);
+                    isSaved = false;
+
+                    Utils.store(context, GETTING_AROUND_LIST_TYPE, false);
+                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_selected_24);
+                    isSaved = true;
+
+                    Utils.store(context, GETTING_AROUND_LIST_TYPE, true);
+                    Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
+
+    boolean isSaved = false;
 }
+
