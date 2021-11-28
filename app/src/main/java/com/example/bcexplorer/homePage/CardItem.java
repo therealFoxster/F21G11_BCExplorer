@@ -1,29 +1,29 @@
 package com.example.bcexplorer.homePage;
 
 public class CardItem {
-    private int titleResource, textResource, imageResource;
+    private String title, category, imageName;
 
-    public CardItem(int titleResource, int textResource) {
-        this.titleResource = titleResource;
-        this.textResource = textResource;
+    public CardItem(String title, String category) {
+        this.title = title;
+        this.category = category;
     }
 
-    public CardItem(int titleResource, int textResource, int imageResource) {
-        this.titleResource = titleResource;
-        this.textResource = textResource;
-        this.imageResource = imageResource;
+    public CardItem(String title, String category, String imageName) {
+        this.title = title;
+        this.category = category;
+        this.imageName = imageName;
     }
 
-    public int getTitleResource() {
-        return titleResource;
+    public String getTitle() {
+        return title;
     }
 
-    public int getTextResource() {
-        return textResource;
+    public String getCategory() {
+        return category;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public String getImageName() {
+        return imageName;
     }
 
 }

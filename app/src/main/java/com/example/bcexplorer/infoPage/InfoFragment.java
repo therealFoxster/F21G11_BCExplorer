@@ -43,13 +43,13 @@ public class InfoFragment extends Fragment{
         InfoItemAdapter infoItemAdapter = new InfoItemAdapter();
 
         // Source code infoItem
-        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.github_icon, R.string.source_code), (View view2) -> {
+        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.ic_github, R.string.source_code), (View view2) -> {
             // Open GitHub page
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.repo_url))));
         });
 
         // Contact us infoItem
-        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.mail_icon, R.string.contact_us), (View view2) -> {
+        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.ic_mail, R.string.contact_us), (View view2) -> {
             // Alert stating the feature might not work
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage("This feature might not work in an emulator");
@@ -75,7 +75,7 @@ public class InfoFragment extends Fragment{
         });
 
         // Credits infoItem
-        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.info_icon, R.string.credits), (View view2) -> {
+        infoItemAdapter.addInfoItem(new InfoItem(R.drawable.ic_info, R.string.credits), (View view2) -> {
             Toast.makeText(view2.getContext(), "Credits view to be implemented", Toast.LENGTH_SHORT).show();
 
             // TODO: Implement credits activity/fragment
