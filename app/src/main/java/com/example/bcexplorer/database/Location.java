@@ -44,13 +44,23 @@ public class Location {
     @ColumnInfo(name = "website")
     private String website;
 
+    // Sources
+    @ColumnInfo(name = "overviewContentSource")
+    private String overviewContentSource;
+    @ColumnInfo(name = "image1Source")
+    private String image1Source;
+    @ColumnInfo(name = "image2Source")
+    private String image2Source;
+    @ColumnInfo(name = "image3Source")
+    private String image3Source;
+
     // Default constructor
 //    public Location() {
 //
 //    }
 
-    // Overloaded constructor
-    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website) {
+    // Overloaded constructor (complete)
+    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website, String overviewContentSource, String image1Source, String image2Source, String image3Source) {
         this.locationID = locationID;
         this.locationName = locationName;
         this.category = category;
@@ -65,7 +75,29 @@ public class Location {
         this.phone = phone;
         this.email = email;
         this.website = website;
+        this.overviewContentSource = overviewContentSource;
+        this.image1Source = image1Source;
+        this.image2Source = image2Source;
+        this.image3Source = image3Source;
     }
+
+    // Overloaded constructor
+//    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website) {
+//        this.locationID = locationID;
+//        this.locationName = locationName;
+//        this.category = category;
+//        this.saved = saved;
+//        this.image1Name = image1Name;
+//        this.image2Name = image2Name;
+//        this.image3Name = image3Name;
+//        this.overviewHeader = overviewHeader;
+//        this.overviewContent = overviewContent;
+//        this.city = city;
+//        this.address = address;
+//        this.phone = phone;
+//        this.email = email;
+//        this.website = website;
+//    }
 
     @NonNull
     public String getLocationID() {
@@ -192,4 +224,35 @@ public class Location {
         this.website = website;
     }
 
+    public String getOverviewContentSource() {
+        return overviewContentSource;
+    }
+
+    public void setOverviewContentSource(String overviewContentSource) {
+        this.overviewContentSource = overviewContentSource;
+    }
+
+    public String getImage1Source() {
+        return image1Source;
+    }
+
+    public void setImage1Source(String image1Source) {
+        this.image1Source = image1Source;
+    }
+
+    public String getImage2Source() {
+        return image2Source;
+    }
+
+    public void setImage2Source(String image2Source) {
+        this.image2Source = image2Source;
+    }
+
+    public String getImage3Source() {
+        return image3Source;
+    }
+
+    public void setImage3Source(String image3Source) {
+        this.image3Source = image3Source;
+    }
 }

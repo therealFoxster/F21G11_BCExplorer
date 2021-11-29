@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.bcexplorer.database.AppDatabase;
+import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.BottomNavigationViewPagerAdapter;
 import com.example.bcexplorer.global.LocationFragment;
 import com.example.bcexplorer.home.HomeFragment;
@@ -21,6 +22,8 @@ import com.example.bcexplorer.info.CreditsFragment;
 import com.example.bcexplorer.info.InfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
