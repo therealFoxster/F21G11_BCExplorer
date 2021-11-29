@@ -1,20 +1,37 @@
 package com.example.bcexplorer.global;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
+import com.example.bcexplorer.database.Location;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +71,8 @@ public class LocationFragment extends Fragment {
         return fragment;
     }
 
+    private static String locationID;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +82,116 @@ public class LocationFragment extends Fragment {
         }
 
         setHasOptionsMenu(true);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null)
+            locationID = bundle.getString("LOCATION_ID", "error");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_location, container, false);
+
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Location");
+        actionBar.setTitle(R.string.location);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
+
+            ImageView imageViewHeader = view.findViewById(R.id.imageViewLocationHeader);
+            imageViewHeader.setImageResource(getResources().getIdentifier(location.getImage1Name(), "drawable", container.getContext().getPackageName()));
+
+            TextView textViewName = view.findViewById(R.id.textViewLocationName);
+            textViewName.setText(location.getLocationName());
+            TextView textViewOverviewHeader = view.findViewById(R.id.textViewLocationOverviewHeader);
+            textViewOverviewHeader.setText(location.getOverviewHeader());
+            TextView textViewLocationOverviewCont = view.findViewById(R.id.textViewLocationOverviewCont);
+            textViewLocationOverviewCont.setText(location.getOverviewContent());
+
+            ViewPager viewPagerLocationImages = view.findViewById(R.id.viewPagerLocationImages);
+
+            ViewPagerLocationImagesAdapter adapter = new ViewPagerLocationImagesAdapter();
+            if (location.getImage3Name() != null)
+                adapter.addImageName(location.getImage3Name());
+            if (location.getImage2Name() != null)
+                adapter.addImageName(location.getImage2Name());
+            adapter.addImageName(location.getImage1Name());
+            viewPagerLocationImages.setAdapter(adapter);
+
+            viewPagerLocationImages.setClipToPadding(false);
+            viewPagerLocationImages.setPadding(80,0, 80, 0);
+            viewPagerLocationImages.setPageMargin(-10);
+
+
+            TextView textViewMaps = view.findViewById(R.id.textViewLocationMaps);
+            textViewMaps.setText("Getting to " + location.getLocationName());
+
+            Button buttonCall = view.findViewById(R.id.buttonCall);
+            Button buttonEmail = view.findViewById(R.id.buttonEmail);
+            Button buttonWebsite = view.findViewById(R.id.buttonWebsite);
+
+            String phone = location.getPhone();
+            String email = location.getEmail();
+
+            if (phone == null)
+                buttonCall.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+            else { // Setup onClickListener
+                buttonCall.setOnClickListener((View view1) -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    String formattedPhoneNumber = PhoneNumberUtils.formatNumber(phone);
+                    builder.setMessage("Call " + formattedPhoneNumber + "?");
+                    builder.setPositiveButton("Call", (DialogInterface dialogInterface, int i) -> {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + location.getPhone()));
+                        view.getContext().startActivity(intent);
+                    });
+                    builder.setNegativeButton("Cancel", (DialogInterface dialogInterface, int i) -> {
+                        dialogInterface.cancel();
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                });
+            }
+            if (email == null)
+                buttonEmail.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+            else { // Setup onClickListener
+                buttonEmail.setOnClickListener((View view1) -> {
+                    // Alert stating the feature might not work
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("This feature might not work in an emulator");
+                    builder.setPositiveButton("Continue", (DialogInterface dialogInterface, int i) -> {
+                        // Send an email; doesn't work in an emulator (tested on Nexus 6 API 30)
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setData(Uri.parse("mailto:"));
+                        emailIntent.setType("text/plain");
+
+                        // Extras
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, location.getEmail());
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, "Content");
+
+                        startActivity(emailIntent);
+                    });
+                    builder.setNegativeButton("Cancel", (DialogInterface dialogInterface, int i) -> {
+                        dialogInterface.cancel();
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                });
+            }
+
+            buttonWebsite.setOnClickListener((View view1) -> {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(location.getWebsite())));
+            });
+
+        });
+
+        return view;
     }
 
     @Override

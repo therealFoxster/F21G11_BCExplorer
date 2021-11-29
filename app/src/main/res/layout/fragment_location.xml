@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +8,191 @@
     android:background="@color/white"
     android:clickable="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_word" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:overScrollMode="never">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/purple_500">
+
+                <ImageView
+                    android:id="@+id/imageViewLocationHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/loc_goldensky2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/viewGradient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:alpha="0.7"
+                    android:background="@drawable/alpha_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textViewLocationName" />
+
+                <TextView
+                    android:id="@+id/textViewLocationName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/hello_word"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/h1"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textViewLocationOverviewHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/textViewLocationOverviewCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="TextView"
+                android:textSize="@dimen/text_body"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:id="@+id/textViewLocationGallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/TextViewGallery"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerLocationImages"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textViewLocationMaps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/TextViewMaps"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="18dp">
+
+                <TextView
+                    android:id="@+id/mapsPlaceHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/purple_500"
+                    android:gravity="center"
+                    android:text="Maps placeholder"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/text_body" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="25dp">
+
+                <Button
+                    android:id="@+id/buttonCall"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.5"
+                    android:text="Call"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_500"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#F3F3F3" />
+
+                <Button
+                    android:id="@+id/buttonEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.5"
+                    android:text="Email"
+                    android:textAllCaps="false"
+                    android:textColor="@color/purple_500"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#F3F3F3" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonWebsite"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="0.5"
+                android:text="Visit website"
+                android:textAllCaps="false"
+                android:textColor="@color/purple_500"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                app:backgroundTint="#F3F3F3" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

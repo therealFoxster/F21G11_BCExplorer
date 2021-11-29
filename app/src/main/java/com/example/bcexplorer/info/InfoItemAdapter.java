@@ -49,7 +49,7 @@ public class InfoItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.info_item, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_info_item, viewGroup, false);
 
         ImageView imageViewInfoItem = view.findViewById(R.id.imageViewInfoItem);
         TextView textViewInfoItem = view.findViewById(R.id.textViewInfoItem);

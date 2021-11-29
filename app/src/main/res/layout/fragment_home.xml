@@ -54,7 +54,7 @@
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
-                android:id="@+id/textViewHomePopular"
+                android:id="@+id/textViewHomeExploreCities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -62,7 +62,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/textViewHomePopular"
+                android:text="@string/textViewHomeExploreCities"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -161,7 +161,7 @@
             </HorizontalScrollView>
 
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPagerHomePopular"
+                android:id="@+id/viewPagerExploreCities"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom"
@@ -173,7 +173,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewHomePopular"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHomeExploreCities"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView

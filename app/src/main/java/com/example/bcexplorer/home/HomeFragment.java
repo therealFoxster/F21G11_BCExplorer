@@ -40,8 +40,8 @@ public class HomeFragment extends Fragment {
     private int currentCardFeatured = 0;
 
     // Popular section
-    private ViewPager viewPagerPopular;
-    private CardPagerAdapter cardPagerAdapterPopular;
+    private ViewPager viewPagerExploreCities;
+    private CardPagerAdapter cardPagerAdapterExploreCities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,8 +75,8 @@ public class HomeFragment extends Fragment {
         setupFeatured();
 
         // Popular section
-        viewPagerPopular = view.findViewById(R.id.viewPagerHomePopular);
-//        setupPopular();
+        viewPagerExploreCities = view.findViewById(R.id.viewPagerExploreCities);
+//        setupExploreCities();
 
         return view;
     }
@@ -109,7 +109,18 @@ public class HomeFragment extends Fragment {
             Collections.shuffle(numbers);
             for (int i = 0; i < numberOfCards; i++) {
                 Location location = MainActivity.database.locationDAO().getLocationWithID("" + numbers.get(i));
-                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
+                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), (View view) -> {
+                    // OnClickListener that launches location view
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    LocationFragment locationFragment = new LocationFragment();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("LOCATION_ID", location.getLocationID());
+                    locationFragment.setArguments(bundle);
+
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                            replace(((ViewGroup) getView().getParent()).getId(), locationFragment, "LOCATION_FRAGMENT").addToBackStack("home").commit();
+                });
             }
         });
 
@@ -148,19 +159,19 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setupPopular() {
+    private void setupExploreCities() {
         // Setting viewPager's height to 325dp
-        ViewGroup.LayoutParams layoutParams = viewPagerPopular.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = viewPagerExploreCities.getLayoutParams();
         layoutParams.height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 325,getResources().getDisplayMetrics()));
-        viewPagerPopular.setLayoutParams(layoutParams);
+        viewPagerExploreCities.setLayoutParams(layoutParams);
 
-        cardPagerAdapterPopular = new CardPagerAdapter();
+        cardPagerAdapterExploreCities = new CardPagerAdapter();
 
-        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
-        cardPagerAdapterPopular.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
+        cardPagerAdapterExploreCities.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
+        cardPagerAdapterExploreCities.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
+        cardPagerAdapterExploreCities.addCardItem(new CardItem(getString(R.string.sample_title), getString(R.string.sample_text)), onClickListenerDummy);
 
-        viewPagerPopular.setAdapter(cardPagerAdapterPopular);
+        viewPagerExploreCities.setAdapter(cardPagerAdapterExploreCities);
     }
 
     // TODO: Rename parameter arguments, choose names that match

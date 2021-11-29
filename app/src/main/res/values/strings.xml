@@ -2,7 +2,7 @@
     <string name="app_name">BCExplorer</string>
 
     <!-- Global -->
-    <string name="location">Location</string>
+    <string name="location">Overview</string>
 
     <!-- Home -->
     <string name="home">Home</string>
@@ -13,8 +13,8 @@
     <string name="title4">Card 4</string>
     <string name="title5">Card 5</string>
     <string name="sample_text">The quick brown fox jumps over the lazy dog</string>
-    <string name="textViewHomeFeatured">Our Favorite Spots</string>
-    <string name="textViewHomePopular">Popular Locations</string>
+    <string name="textViewHomeFeatured">Destinations of the Day</string>
+    <string name="textViewHomeExploreCities">Explore BC Cities</string>
     <string name="textViewHomeCategories">Categories</string>
 
     <!-- Saved -->
@@ -44,4 +44,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="TextViewMaps">Maps</string>
+    <string name="TextViewGallery">Gallery</string>
 </resources>

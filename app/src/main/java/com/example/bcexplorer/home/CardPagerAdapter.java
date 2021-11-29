@@ -61,7 +61,7 @@ public class CardPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         // Inflate layout
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.card_view, container, false);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.view_home_card, container, false);
         container.addView(view);
 
         // Setting card title, subtitle and background
