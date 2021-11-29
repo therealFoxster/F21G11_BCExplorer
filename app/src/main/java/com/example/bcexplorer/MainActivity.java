@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch(id) {
-            case android.R.id.home:
+            case android.R.id.home: // Back button
 //                getSupportFragmentManager().popBackStack();
 //                getSupportFragmentManager().popBackStack("null", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 LocationFragment locationFragment = (LocationFragment) getSupportFragmentManager().findFragmentByTag("LOCATION_FRAGMENT");

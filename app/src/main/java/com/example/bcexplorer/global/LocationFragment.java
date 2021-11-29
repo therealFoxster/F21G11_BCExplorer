@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
@@ -116,10 +118,10 @@ public class LocationFragment extends Fragment {
             ViewPager viewPagerLocationImages = view.findViewById(R.id.viewPagerLocationImages);
 
             ViewPagerLocationImagesAdapter adapter = new ViewPagerLocationImagesAdapter();
-            if (location.getImage3Name() != null)
-                adapter.addImageName(location.getImage3Name());
             if (location.getImage2Name() != null)
                 adapter.addImageName(location.getImage2Name());
+            if (location.getImage3Name() != null)
+                adapter.addImageName(location.getImage3Name());
             adapter.addImageName(location.getImage1Name());
             viewPagerLocationImages.setAdapter(adapter);
 
@@ -199,6 +201,42 @@ public class LocationFragment extends Fragment {
         MenuItem item = menu.findItem(R.id.location_save);
         if(item != null)
             item.setVisible(true);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
+            if (location.isSaved())
+                item.setIcon(R.drawable.ic_location_unsave);
+        });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.location_save: // Save button
+                // If save icon is visible (location is not saved)
+                if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_save).getConstantState()) {
+                    Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.ic_location_unsave); // Change icon to unsave
+
+                    // Set saved status in database
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    executorService.execute(() -> {
+                        MainActivity.database.locationDAO().saveLocation(locationID);
+                    });
+                }
+                // If unsave icon is visible (location is already saved)
+                else if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_unsave).getConstantState()) {
+                    Toast.makeText(getActivity(), "Unsaved", Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.ic_location_save); // Change icon to save
+
+                    // Set unsaved status in database
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    executorService.execute(() -> {
+                        MainActivity.database.locationDAO().unsaveLocation(locationID);
+                    });
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -36,4 +36,10 @@ public interface LocationDAO {
     @Query("SELECT * FROM locations WHERE category = :category")
     List<Location> getLocationsMatchingCategory(String category);
 
+
+    // Update
+    @Query("Update locations SET saved = 1 WHERE locationID = :locationID")
+    void saveLocation(String locationID);
+    @Query("Update locations SET saved = 0 WHERE locationID = :locationID")
+    void unsaveLocation(String locationID);
 }
