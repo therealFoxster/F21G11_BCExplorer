@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">BCExplorer</string>
 
+    <!-- Global -->
+    <string name="location">Location</string>
+
     <!-- Home -->
+    <string name="home">Home</string>
     <string name="sample_title">Title</string>
     <string name="title1">Card 1</string>
     <string name="title2">Card 2</string>
@@ -13,7 +17,11 @@
     <string name="textViewHomePopular">Popular Locations</string>
     <string name="textViewHomeCategories">Categories</string>
 
+    <!-- Saved -->
+    <string name="saved">Saved</string>
+
     <!-- Info -->
+    <string name="info">Information</string>
     <string name="app_version">BCExplorer v1.0</string>
     <string name="source_code">Source code</string>
     <string name="contact_us">Contact us</string>

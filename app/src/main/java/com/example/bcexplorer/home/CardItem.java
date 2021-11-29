@@ -1,4 +1,4 @@
-package com.example.bcexplorer.homePage;
+package com.example.bcexplorer.home;
 
 public class CardItem {
     private String title, category, imageName;

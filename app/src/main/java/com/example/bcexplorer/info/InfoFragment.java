@@ -1,4 +1,4 @@
-package com.example.bcexplorer.infoPage;
+package com.example.bcexplorer.info;
 
 
 import android.app.AlertDialog;
@@ -7,9 +7,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -78,6 +83,9 @@ public class InfoFragment extends Fragment{
         infoItemAdapter.addInfoItem(new InfoItem(R.drawable.ic_info, R.string.credits), (View view2) -> {
             Toast.makeText(view2.getContext(), "Credits view to be implemented", Toast.LENGTH_SHORT).show();
 
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                    replace(((ViewGroup) getView().getParent()).getId(), new CreditsFragment(), "CREDITS_FRAGMENT").addToBackStack("info").commit();
             // TODO: Implement credits activity/fragment
         });
         listViewInfoItems.setAdapter(infoItemAdapter);
@@ -123,6 +131,15 @@ public class InfoFragment extends Fragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        setHasOptionsMenu(true);
+    }
+
+    // Hiding save button
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
 }

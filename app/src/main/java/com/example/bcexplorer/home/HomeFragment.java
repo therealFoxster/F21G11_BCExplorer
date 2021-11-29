@@ -1,9 +1,10 @@
-package com.example.bcexplorer.homePage;
+package com.example.bcexplorer.home;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
@@ -11,13 +12,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.bcexplorer.Constants;
 import com.example.bcexplorer.ListDetailActivity;
 import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
+import com.example.bcexplorer.global.LocationFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,7 +83,9 @@ public class HomeFragment extends Fragment {
 
     // Dummy onClickListener to test cards
     private View.OnClickListener onClickListenerDummy = (View view) -> {
-        Toast.makeText(view.getContext(), "Hello, World!", Toast.LENGTH_SHORT).show();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                replace(((ViewGroup) getView().getParent()).getId(), new LocationFragment(), "LOCATION_FRAGMENT").addToBackStack("home").commit();
     };
 
     private void setupFeatured() {
@@ -108,11 +111,6 @@ public class HomeFragment extends Fragment {
                 Location location = MainActivity.database.locationDAO().getLocationWithID("" + numbers.get(i));
                 cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
             }
-
-//            List<Location> locations = MainActivity.database.locationDAO().getAllLocations();
-//            for (Location location: locations) {
-//                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), onClickListenerDummy);
-//            }
         });
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);

@@ -1,4 +1,4 @@
-package com.example.bcexplorer.infoPage;
+package com.example.bcexplorer.info;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;

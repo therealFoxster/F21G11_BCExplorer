@@ -1,4 +1,4 @@
-package com.example.bcexplorer.homePage;
+package com.example.bcexplorer.home;
 
 import android.view.LayoutInflater;
 import android.view.View;
