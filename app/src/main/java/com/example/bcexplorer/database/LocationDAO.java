@@ -42,4 +42,6 @@ public interface LocationDAO {
     void saveLocation(String locationID);
     @Query("Update locations SET saved = 0 WHERE locationID = :locationID")
     void unsaveLocation(String locationID);
+    @Query("Update locations SET savedTime = :savedTime WHERE locationID = :locationID")
+    void setSavedTime(String locationID, int savedTime);
 }

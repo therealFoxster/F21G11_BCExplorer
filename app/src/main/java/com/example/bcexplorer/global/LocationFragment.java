@@ -222,6 +222,7 @@ public class LocationFragment extends Fragment {
                     ExecutorService executorService = Executors.newSingleThreadExecutor();
                     executorService.execute(() -> {
                         MainActivity.database.locationDAO().saveLocation(locationID);
+                        MainActivity.database.locationDAO().setSavedTime(locationID, (int) (System.currentTimeMillis()/1000)); // Saved time
                     });
                 }
                 // If unsave icon is visible (location is already saved)

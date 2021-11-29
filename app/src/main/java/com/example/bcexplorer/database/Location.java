@@ -53,14 +53,16 @@ public class Location {
     private String image2Source;
     @ColumnInfo(name = "image3Source")
     private String image3Source;
-
+    @ColumnInfo(name = "savedTime")
+    private int savedTime;
     // Default constructor
 //    public Location() {
 //
 //    }
 
     // Overloaded constructor (complete)
-    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website, String overviewContentSource, String image1Source, String image2Source, String image3Source) {
+
+    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website, String overviewContentSource, String image1Source, String image2Source, String image3Source, int savedTime) {
         this.locationID = locationID;
         this.locationName = locationName;
         this.category = category;
@@ -79,7 +81,9 @@ public class Location {
         this.image1Source = image1Source;
         this.image2Source = image2Source;
         this.image3Source = image3Source;
+        this.savedTime = savedTime;
     }
+
 
     // Overloaded constructor
 //    public Location(@NonNull String locationID, String locationName, String category, int saved, String image1Name, String image2Name, String image3Name, String overviewHeader, String overviewContent, String city, String address, String phone, String email, String website) {
@@ -254,5 +258,13 @@ public class Location {
 
     public void setImage3Source(String image3Source) {
         this.image3Source = image3Source;
+    }
+
+    public int getSavedTime() {
+        return savedTime;
+    }
+
+    public void setSavedTime(int savedTime) {
+        this.savedTime = savedTime;
     }
 }
