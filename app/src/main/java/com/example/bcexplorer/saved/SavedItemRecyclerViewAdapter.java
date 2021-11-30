@@ -23,6 +23,8 @@ import com.example.bcexplorer.global.LocationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter.SavedItemViewHolder> {
     List<Location> locationList;
@@ -87,6 +89,20 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
         // Save button's click listener
         imageViewSaveIcon.setOnClickListener((View view1) -> {
             Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
+
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                // Unsave location
+                MainActivity.database.locationDAO().unsaveLocation(locationList.get(position).getLocationID());
+            });
+
+            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    MainActivity.refreshSavedPage();
+                }
+            });
+
         });
     }
 

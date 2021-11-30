@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -143,8 +144,14 @@ public class SavedFragment extends Fragment {
         executorService.execute(() -> {
             List<Location> locationList = MainActivity.database.locationDAO().getSavedLocations();
             SavedItemRecyclerViewAdapter adapter = new SavedItemRecyclerViewAdapter(locationList, requireContext(), (ViewGroup) getView().getParent());
-            b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
-            b.recyclerViewSaved.setAdapter(adapter);
+            Log.d("SAVED_FRAGMENT", "saved locations: " + locationList.size());
+            ((AppCompatActivity) requireContext()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
+                    b.recyclerViewSaved.setAdapter(adapter);
+                }
+            });
 
             noSavedDestinations = locationList.isEmpty();
             checkSavedItems();

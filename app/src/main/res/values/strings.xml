@@ -20,7 +20,7 @@
     <string name="title4">Card 4</string>
     <string name="title5">Card 5</string>
     <string name="sample_text">The quick brown fox jumps over the lazy dog</string>
-    <string name="textViewHomeFeatured">Destinations of the Day</string>
+    <string name="textViewHomeFeatured">Featured Destinations</string>
     <string name="textViewHomeExploreCities">Explore BC Cities</string>
     <string name="textViewHomeCategories">Categories</string>
 

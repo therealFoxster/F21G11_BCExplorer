@@ -308,27 +308,18 @@ public class LocationFragment extends Fragment {
                     });
                 }
 
-                // Manually switching bottom navigation pages to refresh saved page
-                int selectedItem = MainActivity.bottomNavigationView.getSelectedItemId();
-                int ms = 50;
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        Log.d("LOCATION_FRAGMENT", "Switching to info");
-                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.bottom_nav_info);
-                    }
-                }, ms);
-//                new Handler().postDelayed(new Runnable() {
-//                    public void run() {
-//                        Log.d("LOCATION_FRAGMENT", "Switching to saved");
-//                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.bottom_nav_saved);
-//                    }
-//                }, ms + 50);
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        Log.d("LOCATION_FRAGMENT", "Switching to original");
-                        MainActivity.bottomNavigationView.setSelectedItemId(selectedItem);
-                    }
-                }, ms + 50);
+                LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+
+//                if (savedLocationFragment == null)
+//                    Log.d("LOCATION_FRAGMENT", "savedLocationFragment is null");
+//                else {
+//                    Log.d("LOCATION_FRAGMENT", "savedLocationFragment is not null");
+//                    if (savedLocationFragment.isVisible())
+//                        Log.d("LOCATION_FRAGMENT", "savedLocationFragment is visible");
+//                    else Log.d("LOCATION_FRAGMENT", "savedLocationFragment is not visible");
+//                }
+                if (savedLocationFragment != null) // If in location fragment started by saved page
+                    MainActivity.refreshSavedPage();
 
                 break;
         }

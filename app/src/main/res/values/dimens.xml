@@ -4,7 +4,7 @@
     <dimen name="design_bottom_navigation_height" tools:override="true">65dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="h1">36sp</dimen>
-    <dimen name="h2">32sp</dimen>
+    <dimen name="h2">30sp</dimen>
     <dimen name="h3">28sp</dimen>
     <dimen name="h4">26sp</dimen>
     <dimen name="text_body">18sp</dimen>

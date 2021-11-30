@@ -13,10 +13,11 @@
         android:text="@string/textViewNoSavedItem"
         android:textSize="@dimen/text_body" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never">
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,11 +29,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/textViewCities"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h3"
+                android:textSize="@dimen/h2"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -51,16 +52,16 @@
                 android:layout_marginRight="16dp"
                 android:text="@string/TextViewDestinations"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h3"
+                android:textSize="@dimen/h2"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSaved"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

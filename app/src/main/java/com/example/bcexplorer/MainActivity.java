@@ -5,10 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -215,6 +217,41 @@ public class MainActivity extends AppCompatActivity {
     private void showBackButton() {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    public static void refreshSavedPage() {
+        // Detaching and reattaching the saved page to refresh its data
+            Fragment savedPage = ((BottomNavigationViewPagerAdapter) bottomNavigationViewPager.getAdapter()).getItem(1);
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.detach(savedPage);
+//            fragmentTransaction.attach(savedPage);
+//            fragmentTransaction.commit();
+
+        // Calling onResume() to refresh saved page
+            savedPage.onResume(); savedPage.onResume(); savedPage.onResume();
+
+        // Manually switching bottom navigation pages to invoke onResume() to refresh saved page; not the most optimal method but it's the most reliable in my testing
+//        int selectedItem = bottomNavigationView.getSelectedItemId();
+//        int ms = 50;
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+////                Log.d("LOCATION_FRAGMENT", "Switching to info");
+//                bottomNavigationView.setSelectedItemId(R.id.bottom_nav_info);
+//            }
+//        }, ms);
+////                new Handler().postDelayed(new Runnable() {
+////                    public void run() {
+////                        Log.d("LOCATION_FRAGMENT", "Switching to saved");
+////                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.bottom_nav_saved);
+////                    }
+////                }, ms + 50);
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+////                Log.d("LOCATION_FRAGMENT", "Switching to original");
+//                bottomNavigationView.setSelectedItemId(selectedItem);
+//            }
+//        }, ms + 50);
     }
 
 }
