@@ -144,6 +144,7 @@ public class LocationFragment extends Fragment {
             viewPagerLocationImages.setPadding(80,0, 80, 0);
             viewPagerLocationImages.setPageMargin(-10);
 
+            // TODO: Setup maps view
 
             TextView textViewMaps = view.findViewById(R.id.textViewLocationMaps);
             textViewMaps.setText("Getting to " + location.getLocationName());
@@ -223,7 +224,7 @@ public class LocationFragment extends Fragment {
 
         if (locationFragment == null && savedLocationFragment == null)
             item.setVisible(false);
-        else if(item != null)
+        else if (item != null)
             item.setVisible(true);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {

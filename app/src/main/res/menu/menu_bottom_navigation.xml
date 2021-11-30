@@ -3,12 +3,12 @@
     <item
         android:id="@+id/bottom_nav_home"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_home_foreground"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="Home"/>
     <item
         android:id="@+id/bottom_nav_saved"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_saved_foreground"
+        android:icon="@drawable/ic_baseline_bookmark_selected_24"
         android:title="Saved"/>
 <!--    <item-->
 <!--        android:id="@+id/bottom_nav_settings"-->
@@ -18,6 +18,6 @@
     <item
         android:id="@+id/bottom_nav_info"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_info_foreground"
+        android:icon="@drawable/ic_baseline_info_24"
         android:title="Info"/>
 </menu>
