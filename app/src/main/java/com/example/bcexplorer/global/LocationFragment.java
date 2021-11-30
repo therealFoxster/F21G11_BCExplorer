@@ -1,5 +1,8 @@
 package com.example.bcexplorer.global;
 
+import static com.example.bcexplorer.MainActivity.bottomNavigationViewPager;
+import static com.example.bcexplorer.MainActivity.fragmentManager;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,13 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +36,9 @@ import android.widget.Toast;
 import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
+import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -88,6 +97,12 @@ public class LocationFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null)
             locationID = bundle.getString("LOCATION_ID", "error");
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
+            locationIsSaved = location.isSaved();
+        });
     }
 
     @Override
@@ -196,23 +211,79 @@ public class LocationFragment extends Fragment {
         return view;
     }
 
+    private static boolean locationIsSaved = false;
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        LocationFragment locationFragment = (LocationFragment) fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
+        LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+
         MenuItem item = menu.findItem(R.id.location_save);
-        if(item != null)
+
+        if (locationFragment == null && savedLocationFragment == null)
+            item.setVisible(false);
+        else if(item != null)
             item.setVisible(true);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
-            if (location.isSaved() && item != null)
-                item.setIcon(R.drawable.ic_location_unsave);
+//            locationIsSaved = location.isSaved();
+//            if (location.isSaved())
+//                item.setIcon(R.drawable.ic_location_unsave);
+//            else
+//                item.setIcon(R.drawable.ic_location_save);
         });
+
+        if (locationIsSaved && item != null) {
+            item.setIcon(R.drawable.ic_location_unsave);
+        }
+        else if (!locationIsSaved && item != null) {
+            item.setIcon(R.drawable.ic_location_save);
+        }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.location_save);
+
+        LocationFragment locationFragment = (LocationFragment) fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
+        LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+
+        if (MainActivity.bottomNavigationViewPager.getCurrentItem() == 0 && locationFragment == null) // On home page
+            item.setVisible(false);
+        else if (MainActivity.bottomNavigationViewPager.getCurrentItem() == 1 && savedLocationFragment == null) // On saved page
+            item.setVisible(false);
+        else if (item != null)
+            item.setVisible(true);
+//        if(item != null)
+//            item.setVisible(true);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
+            locationIsSaved = location.isSaved();
+        });
+
+        if (locationIsSaved && item != null)
+            item.setIcon(R.drawable.ic_location_unsave);
+        else if (!locationIsSaved && item != null) {
+            item.setIcon(R.drawable.ic_location_save);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.location_save: // Save button
+
+                // Detaching and reattaching the saved page to refresh its data
+//                Fragment savedPage = ((BottomNavigationViewPagerAdapter) bottomNavigationViewPager.getAdapter()).getItem(1);
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.detach(savedPage);
+//                fragmentTransaction.attach(savedPage);
+//                fragmentTransaction.commit();
+//                savedPage.onResume();
+
                 // If save icon is visible (location is not saved)
                 if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_save).getConstantState()) {
                     Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
@@ -236,6 +307,29 @@ public class LocationFragment extends Fragment {
                         MainActivity.database.locationDAO().unsaveLocation(locationID);
                     });
                 }
+
+                // Manually switching bottom navigation pages to refresh saved page
+                int selectedItem = MainActivity.bottomNavigationView.getSelectedItemId();
+                int ms = 50;
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        Log.d("LOCATION_FRAGMENT", "Switching to info");
+                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.bottom_nav_info);
+                    }
+                }, ms);
+//                new Handler().postDelayed(new Runnable() {
+//                    public void run() {
+//                        Log.d("LOCATION_FRAGMENT", "Switching to saved");
+//                        MainActivity.bottomNavigationView.setSelectedItemId(R.id.bottom_nav_saved);
+//                    }
+//                }, ms + 50);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        Log.d("LOCATION_FRAGMENT", "Switching to original");
+                        MainActivity.bottomNavigationView.setSelectedItemId(selectedItem);
+                    }
+                }, ms + 50);
+
                 break;
         }
         return super.onOptionsItemSelected(item);

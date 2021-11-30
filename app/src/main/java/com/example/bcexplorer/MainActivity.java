@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,10 +30,10 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
-    ViewPager2 bottomNavigationViewPager;
+    public static BottomNavigationView bottomNavigationView;
+    public static ViewPager2 bottomNavigationViewPager;
     ActionBar actionBar;
-    FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
 
     public static AppDatabase database;
 
@@ -73,7 +74,16 @@ public class MainActivity extends AppCompatActivity {
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
                     break;
                 case R.id.bottom_nav_saved:
-                    actionBar.setTitle(R.string.saved);
+                    LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+                    // If there are items in the backstack and location view (saved) is visible
+                    if (fragmentManager.getBackStackEntryCount() > 0 && savedLocationFragment != null) {
+                        actionBar.setTitle(R.string.location);
+                        showBackButton();
+                    } else {
+                        actionBar.setTitle(R.string.saved);
+                        hideBackButton();
+                    }
+
                     bottomNavigationViewPager.setCurrentItem(1, false);
 
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.constraintLayoutContainer, new BlankFragment()).commit();
@@ -106,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() < 1) {
                 switch (bottomNavigationViewPager.getCurrentItem()) {
                     case 0:
-                        actionBar.setTitle("Home");
+                        actionBar.setTitle(R.string.home);
                         break;
                     case 1:
-                        actionBar.setTitle("Location");
+                        actionBar.setTitle(R.string.saved);
                         break;
                     case 2:
-                        actionBar.setTitle("Information");
+                        actionBar.setTitle(R.string.info);
                         break;
                 }
                 hideBackButton();
@@ -123,10 +133,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        LocationFragment locationFragment = (LocationFragment) getSupportFragmentManager().findFragmentByTag("LOCATION_FRAGMENT");
+        LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+
         getMenuInflater().inflate(R.menu.menu_location_view, menu);
+
         MenuItem item = menu.findItem(R.id.location_save);
-        item.setVisible(false);
+        if (locationFragment == null && savedLocationFragment == null)
+            item.setVisible(false);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        LocationFragment locationFragment = (LocationFragment) getSupportFragmentManager().findFragmentByTag("LOCATION_FRAGMENT");
+        LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+
+        if (menu != null && menu.findItem(R.id.location_save) != null && locationFragment == null && savedLocationFragment == null)
+            menu.findItem(R.id.location_save).setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     // Method that handles actionBar items
@@ -137,14 +162,17 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home: // Back button
 //                getSupportFragmentManager().popBackStack();
 //                getSupportFragmentManager().popBackStack("null", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                LocationFragment locationFragment = (LocationFragment) getSupportFragmentManager().findFragmentByTag("LOCATION_FRAGMENT");
-                CreditsFragment creditsFragment = (CreditsFragment) getSupportFragmentManager().findFragmentByTag("CREDITS_FRAGMENT");
+                LocationFragment locationFragment = (LocationFragment) fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
+                CreditsFragment creditsFragment = (CreditsFragment) fragmentManager.findFragmentByTag("CREDITS_FRAGMENT");
+                LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
 
                 // Pop backstack until encounter correct backstack entry
                 if (locationFragment != null)
                     getSupportFragmentManager().popBackStack("home", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 else if (creditsFragment != null)
                     getSupportFragmentManager().popBackStack("info", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                else if (savedLocationFragment != null)
+                    getSupportFragmentManager().popBackStack("saved", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 break;
         }
 

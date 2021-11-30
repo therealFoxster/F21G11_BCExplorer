@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.LocationFragment;
@@ -25,10 +27,24 @@ import java.util.List;
 public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter.SavedItemViewHolder> {
     List<Location> locationList;
     Context context;
+    ViewGroup parent;
 
     public SavedItemRecyclerViewAdapter(Context context) {
         locationList = new ArrayList<>();
         this.context = context;
+    }
+
+    public SavedItemRecyclerViewAdapter(Context context, ViewGroup viewGroup) {
+        locationList = new ArrayList<>();
+        this.context = context;
+        parent = viewGroup;
+    }
+
+    // Overloaded constructor
+    public SavedItemRecyclerViewAdapter(List<Location> locationList, Context context, ViewGroup viewGroup) {
+        this.locationList = locationList;
+        this.context = context;
+        parent = viewGroup;
     }
 
     @NonNull
@@ -53,6 +69,22 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
         textViewSavedItemSubTitle.setText(locationList.get(position).getOverviewHeader());
         imageViewSavedItem.setImageResource(holder.savedItemView.getResources().getIdentifier(locationList.get(position).getImage1Name(), "drawable", holder.savedItemView.getContext().getPackageName()));
 
+        CardView cardViewContainer = holder.savedItemView.findViewById(R.id.cardViewSavedItem);
+
+        // Card's click listener
+        cardViewContainer.setOnClickListener((View view1) -> {
+            FragmentTransaction fragmentTransaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+            LocationFragment locationFragment = new LocationFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("LOCATION_ID", locationList.get(position).getLocationID());
+            locationFragment.setArguments(bundle);
+
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                    replace(parent.getId(), locationFragment, "SAVED_LOCATION_FRAGMENT").addToBackStack("saved").commit();
+        });
+
+        // Save button's click listener
         imageViewSaveIcon.setOnClickListener((View view1) -> {
             Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
         });
@@ -63,12 +95,6 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
         if (locationList != null)
             return locationList.size();
         else return 0;
-    }
-
-    // Overloaded constructor
-    public SavedItemRecyclerViewAdapter(List<Location> locationList, Context context) {
-        this.locationList = locationList;
-        this.context = context;
     }
 
     public void addLocation(Location location) {

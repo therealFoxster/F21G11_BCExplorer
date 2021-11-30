@@ -27,6 +27,10 @@ public class BottomNavigationViewPagerAdapter extends FragmentStateAdapter {
         return fragmentList.get(position);
     }
 
+    public Fragment getItem(int position) {
+        return fragmentList.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return fragmentList.size();

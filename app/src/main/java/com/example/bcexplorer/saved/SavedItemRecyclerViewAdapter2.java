@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcexplorer.R;
@@ -57,7 +58,14 @@ public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedIte
         textViewSavedItemSubTitle.setText(itemModelList.get(position).getItemDesc());
         imageViewSavedItem.setImageResource(itemModelList.get(position).getImage());
 
-        // onClickListener for save button
+        CardView cardViewContainer = holder.savedItemView.findViewById(R.id.cardViewSavedItem);
+
+        // Card's click listener
+        cardViewContainer.setOnClickListener((View view1) -> {
+
+        });
+
+        // Save button's click listener
         imageViewSaveIcon.setOnClickListener((View view1) -> {
             Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
         });
