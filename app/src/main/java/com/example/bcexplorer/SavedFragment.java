@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.databinding.FragmentSavedBinding;
+import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter;
 import com.example.bcexplorer.utils.CustomAdapter;
 import com.example.bcexplorer.utils.ListItemModel;
 import com.example.bcexplorer.utils.Utils;
@@ -23,6 +27,9 @@ import com.example.bcexplorer.utils.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SavedFragment extends Fragment {
 
@@ -37,6 +44,7 @@ public class SavedFragment extends Fragment {
         b = FragmentSavedBinding.inflate(inflater, container, false);
 
         initAdapter();
+//        Toast.makeText(b.getRoot().getContext(), "View created", Toast.LENGTH_SHORT).show();
 
         return b.getRoot();
     }
@@ -46,6 +54,7 @@ public class SavedFragment extends Fragment {
         super.onResume();
 
         initAdapter();
+        setupRecyclerView();
     }
 
     private void initAdapter() {
@@ -116,6 +125,33 @@ public class SavedFragment extends Fragment {
 
         CustomAdapter customAdapter = new CustomAdapter(requireContext(), arrayList);
         b.list.setAdapter(customAdapter);
+
+        if (b.list.getCount() > 0) { // Hides "No saved items" text
+            b.textViewNoSavedItem.setVisibility(View.GONE);
+        }
+        else {
+            b.textViewNoSavedItem.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    private void setupRecyclerView() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            List<Location> locationList = MainActivity.database.locationDAO().getSavedLocations();
+            SavedItemRecyclerViewAdapter adapter = new SavedItemRecyclerViewAdapter(locationList, requireActivity());
+            b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
+            b.recyclerViewSaved.setAdapter(adapter);
+
+            if (locationList.size() > 0) { // Hides "No saved items" text
+                b.textViewNoSavedItem.setVisibility(View.GONE);
+                b.textViewDestination.setVisibility(View.VISIBLE);
+            }
+            else {
+                b.textViewNoSavedItem.setVisibility(View.VISIBLE);
+                b.textViewDestination.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

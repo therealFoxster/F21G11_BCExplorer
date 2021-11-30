@@ -204,7 +204,7 @@ public class LocationFragment extends Fragment {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
-            if (location.isSaved())
+            if (location.isSaved() && item != null)
                 item.setIcon(R.drawable.ic_location_unsave);
         });
     }

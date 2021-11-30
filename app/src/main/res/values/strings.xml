@@ -46,4 +46,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="TextViewMaps">Maps</string>
     <string name="TextViewGallery">Gallery</string>
+    <string name="textViewNoSavedItem">No saved items</string>
+    <string name="TextViewDestinations">Destinations</string>
 </resources>

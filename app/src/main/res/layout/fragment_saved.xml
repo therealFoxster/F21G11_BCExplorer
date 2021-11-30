@@ -5,16 +5,43 @@
     android:layout_height="match_parent"
     tools:context=".SavedFragment">
 
+    <TextView
+        android:id="@+id/textViewNoSavedItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/textViewNoSavedItem"
+        android:textSize="@dimen/text_body" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"/>
+
+        <TextView
+            android:id="@+id/textViewDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/TextViewDestinations"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h3"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSaved"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"/>
 
     </LinearLayout>
 

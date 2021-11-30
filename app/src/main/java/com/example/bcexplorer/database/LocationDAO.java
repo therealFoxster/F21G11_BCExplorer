@@ -35,6 +35,8 @@ public interface LocationDAO {
     List<String> getAllCategories();
     @Query("SELECT * FROM locations WHERE category = :category")
     List<Location> getLocationsMatchingCategory(String category);
+    @Query("SELECT * FROM locations WHERE saved = 1 ORDER BY savedTime DESC")
+    List<Location> getSavedLocations(); // Get saved locations in descending order of savedTime
 
 
     // Update
