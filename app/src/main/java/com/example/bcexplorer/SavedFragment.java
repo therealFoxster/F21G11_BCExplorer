@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.databinding.FragmentSavedBinding;
 import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter;
+import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter2;
 import com.example.bcexplorer.utils.CustomAdapter;
 import com.example.bcexplorer.utils.ListItemModel;
 import com.example.bcexplorer.utils.Utils;
@@ -38,13 +39,15 @@ public class SavedFragment extends Fragment {
     }
 
     private FragmentSavedBinding b;
+    private static boolean noSavedCityGuides = false, noSavedDestinations = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         b = FragmentSavedBinding.inflate(inflater, container, false);
 
         initAdapter();
-//        Toast.makeText(b.getRoot().getContext(), "View created", Toast.LENGTH_SHORT).show();
+        setupRecyclerView();
+        checkSavedItems();
 
         return b.getRoot();
     }
@@ -55,6 +58,7 @@ public class SavedFragment extends Fragment {
 
         initAdapter();
         setupRecyclerView();
+        checkSavedItems();
     }
 
     private void initAdapter() {
@@ -123,16 +127,15 @@ public class SavedFragment extends Fragment {
             }
         });
 
-        CustomAdapter customAdapter = new CustomAdapter(requireContext(), arrayList);
-        b.list.setAdapter(customAdapter);
+//        CustomAdapter customAdapter = new CustomAdapter(requireContext(), arrayList);
+//        b.list.setAdapter(customAdapter);
 
-        if (b.list.getCount() > 0) { // Hides "No saved items" text
-            b.textViewNoSavedItem.setVisibility(View.GONE);
-        }
-        else {
-            b.textViewNoSavedItem.setVisibility(View.VISIBLE);
+        SavedItemRecyclerViewAdapter2 adapter = new SavedItemRecyclerViewAdapter2(arrayList, requireContext());
+        b.recyclerViewSavedCityGuides.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
+        b.recyclerViewSavedCityGuides.setAdapter(adapter);
 
-        }
+        noSavedCityGuides = arrayList.isEmpty();
+        checkSavedItems();
     }
 
     private void setupRecyclerView() {
@@ -143,14 +146,8 @@ public class SavedFragment extends Fragment {
             b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
             b.recyclerViewSaved.setAdapter(adapter);
 
-            if (locationList.size() > 0) { // Hides "No saved items" text
-                b.textViewNoSavedItem.setVisibility(View.GONE);
-                b.textViewDestination.setVisibility(View.VISIBLE);
-            }
-            else {
-                b.textViewNoSavedItem.setVisibility(View.VISIBLE);
-                b.textViewDestination.setVisibility(View.GONE);
-            }
+            noSavedDestinations = locationList.isEmpty();
+            checkSavedItems();
         });
     }
 
@@ -166,5 +163,20 @@ public class SavedFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
+    }
+
+    private void checkSavedItems() {
+        if (noSavedCityGuides)
+            b.textViewCities.setVisibility(View.GONE);
+        else b.textViewCities.setVisibility(View.VISIBLE);
+
+        if (noSavedDestinations)
+            b.textViewDestination.setVisibility(View.GONE);
+        else b.textViewDestination.setVisibility(View.VISIBLE);
+
+        if (noSavedCityGuides && noSavedDestinations)
+            b.textViewNoSavedItem.setVisibility(View.VISIBLE);
+        else
+            b.textViewNoSavedItem.setVisibility(View.GONE);
     }
 }

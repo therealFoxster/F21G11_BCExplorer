@@ -1,8 +1,6 @@
 package com.example.bcexplorer.saved;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,36 +9,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcexplorer.R;
-import com.example.bcexplorer.database.Location;
-import com.example.bcexplorer.global.LocationFragment;
+import com.example.bcexplorer.utils.ListItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter.SavedItemViewHolder> {
-    List<Location> locationList;
+public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter2.SavedItemViewHolder> {
+    List<ListItemModel> itemModelList;
     Context context;
 
-    public SavedItemRecyclerViewAdapter(Context context) {
-        locationList = new ArrayList<>();
+    public SavedItemRecyclerViewAdapter2(Context context) {
+        itemModelList = new ArrayList<>();
+        this.context = context;
+    }
+
+    public void addItemModel(ListItemModel itemModel) {
+        itemModelList.add(itemModel);
+    }
+
+    public SavedItemRecyclerViewAdapter2(List<ListItemModel> itemModelList, Context context) {
+        this.itemModelList = itemModelList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public SavedItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SavedItemRecyclerViewAdapter2.SavedItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_saved_item, parent, false);
 
-        return new SavedItemViewHolder(view);
+        return new SavedItemRecyclerViewAdapter2.SavedItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SavedItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SavedItemRecyclerViewAdapter2.SavedItemViewHolder holder, int position) {
         TextView textViewSavedItemTitle, textViewSavedItemSubTitle;
         ImageView imageViewSavedItem, imageViewSaveIcon;
 
@@ -49,10 +53,11 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
         imageViewSavedItem = holder.savedItemView.findViewById(R.id.imageViewSavedItem);
         imageViewSaveIcon = holder.savedItemView.findViewById(R.id.imageViewSaveIcon);
 
-        textViewSavedItemTitle.setText(locationList.get(position).getLocationName());
-        textViewSavedItemSubTitle.setText(locationList.get(position).getOverviewHeader());
-        imageViewSavedItem.setImageResource(holder.savedItemView.getResources().getIdentifier(locationList.get(position).getImage1Name(), "drawable", holder.savedItemView.getContext().getPackageName()));
+        textViewSavedItemTitle.setText(itemModelList.get(position).getItemTitle());
+        textViewSavedItemSubTitle.setText(itemModelList.get(position).getItemDesc());
+        imageViewSavedItem.setImageResource(itemModelList.get(position).getImage());
 
+        // onClickListener for save button
         imageViewSaveIcon.setOnClickListener((View view1) -> {
             Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
         });
@@ -60,19 +65,9 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
 
     @Override
     public int getItemCount() {
-        if (locationList != null)
-            return locationList.size();
+        if (itemModelList != null)
+            return itemModelList.size();
         else return 0;
-    }
-
-    // Overloaded constructor
-    public SavedItemRecyclerViewAdapter(List<Location> locationList, Context context) {
-        this.locationList = locationList;
-        this.context = context;
-    }
-
-    public void addLocation(Location location) {
-        locationList.add(location);
     }
 
     public class SavedItemViewHolder extends RecyclerView.ViewHolder {

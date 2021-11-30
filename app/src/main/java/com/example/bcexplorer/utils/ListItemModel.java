@@ -13,4 +13,12 @@ public class ListItemModel {
     public String getItemTitle() {
         return itemTitle;
     }
+
+    public String getItemDesc() {
+        return itemDesc;
+    }
+
+    public int getImage() {
+        return image;
+    }
 }

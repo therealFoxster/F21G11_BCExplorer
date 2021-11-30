@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
+        android:id="@+id/cardViewSavedItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/purple_500"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/destinationImage"/>
 
         <View
             android:id="@+id/viewBackgroundColor"
@@ -81,7 +83,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_bookmark_selected_24"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="@string/saveIcon"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
