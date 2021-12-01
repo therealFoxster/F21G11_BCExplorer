@@ -103,6 +103,7 @@ public class ReadMoreActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) { // Back button
             finish();
+            overridePendingTransition(R.anim.enter_rev, R.anim.exit_rev);
         }
         else if(id == R.id.location_save)
         {
