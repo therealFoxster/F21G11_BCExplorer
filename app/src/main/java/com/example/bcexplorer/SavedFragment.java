@@ -70,55 +70,55 @@ public class SavedFragment extends Fragment {
         // WHISTLER
         if (Utils.getBoolean(context, Constants.WHISTLER))
             arrayList.add(new ListItemModel("Whistler",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "Tourist Spot Outside Vancouver",
                     R.drawable.whistler));
 
         // VANCOUVER
         if (Utils.getBoolean(context, Constants.VANCOUVER))
             arrayList.add(new ListItemModel("Downtown Vancouver",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "Center of The City",
                     R.drawable.vancouver));
 
         // WHITE ROCK
         if (Utils.getBoolean(context, Constants.WHITE_ROCK))
             arrayList.add(new ListItemModel("White Rock",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "City In British Columbia",
                     R.drawable.white_rock));
 
         // GETTING_AROUND_WHISTLER
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_WHISTLER))
             arrayList.add(new ListItemModel("Getting Around Whistler",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "Maps and Tips",
                     R.drawable.map));
 
         // GETTING_AROUND_VANCOUVER
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_VANCOUVER))
             arrayList.add(new ListItemModel("Getting Around DT Vancouver",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "Maps and Tips.",
                     R.drawable.map));
 
         // GETTING_AROUND_WHITE ROCK
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_WHITE_ROCK))
             arrayList.add(new ListItemModel("Getting Around White Rock",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "Maps and Tips.",
                     R.drawable.map));
 
         // WHATS_NEW_WHISTLER
         if (Utils.getBoolean(context, Constants.WHATS_NEW_WHISTLER))
             arrayList.add(new ListItemModel("Like Darts But More Canadian",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "What's New in Whistler",
                     R.drawable.whats_new_whistler));
 
         // WHATS_NEW_VANCOUVER
         if (Utils.getBoolean(context, Constants.WHATS_NEW_VANCOUVER))
             arrayList.add(new ListItemModel("Vancouver is upping the steaks",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "What's New in Downtown Vancouver",
                     R.drawable.whats_new_vancouver));
 
         // WHATS_NEW_WHITE ROCK
         if (Utils.getBoolean(context, Constants.WHATS_NEW_WHITE_ROCK))
             arrayList.add(new ListItemModel("The Pond at BFS",
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    "What's New in Whistler",
                     R.drawable.whats_new_white_rock));
 
         Collections.sort(arrayList, new Comparator<ListItemModel>() {

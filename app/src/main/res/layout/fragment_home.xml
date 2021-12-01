@@ -96,11 +96,16 @@
 
                             <TextView
                                 style="@style/headertext"
-                                android:text="White Rock" />
+                                android:text="White Rock"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/h4"
+                                android:textStyle="bold"/>
 
                             <TextView
                                 style="@style/desctext"
-                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+                                android:text="City In British Columbia"
+                                />
 
                         </LinearLayout>
 
@@ -120,11 +125,16 @@
 
                             <TextView
                                 style="@style/headertext"
-                                android:text="Downtown Vancouver" />
+                                android:text="Downtown Vancouver"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/h4"
+                                android:textStyle="bold"/>
 
                             <TextView
                                 style="@style/desctext"
-                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+                                android:text="Center of The City"
+                                android:textSize="@dimen/text_body_small"/>
 
                         </LinearLayout>
 
@@ -139,17 +149,23 @@
 
                         <ImageView
                             style="@style/image_view"
-                            android:src="@drawable/whistler" />
+                            android:src="@drawable/whistler"
+                            android:textSize="@dimen/text_body_small"/>
 
                         <LinearLayout style="@style/card_text_bg">
 
                             <TextView
                                 style="@style/headertext"
-                                android:text="Whistler" />
+                                android:text="Whistler"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/h4"
+                                android:textStyle="bold"/>
 
                             <TextView
                                 style="@style/desctext"
-                                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
+                                android:text="Tourist Spot Outside Vancouver"
+                                android:textSize="@dimen/text_body_small"/>
 
                         </LinearLayout>
 
