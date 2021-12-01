@@ -7,48 +7,16 @@
     android:background="#ffffff"
     tools:context=".ReadMoreActivity">
 
-    <RelativeLayout
-    android:id="@+id/top_layout_bottom_activity"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/saveBtnExplore"
-            android:src="@drawable/ic_baseline_bookmark_unselected_24"
-            app:tint="@color/gray" />
-
-        <TextView
-            android:id="@+id/topText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="20dp"
-            android:autoSizeTextType="uniform"
-            android:breakStrategy="balanced"
-            android:maxLines="1"
-            android:text="Home"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_layout_bottom_activity"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/mapImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="350dp"
             android:scaleType="centerCrop"
             android:src="@drawable/map" />
 
@@ -64,6 +32,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/airportTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,6 +52,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/taxisTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +72,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/bikesTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,6 +92,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/walkTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

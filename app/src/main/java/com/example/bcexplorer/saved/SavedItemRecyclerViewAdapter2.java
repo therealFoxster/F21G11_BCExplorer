@@ -69,6 +69,8 @@ public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedIte
         imageViewSaveIcon.setOnClickListener((View view1) -> {
             Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
         });
+
+
     }
 
     @Override
