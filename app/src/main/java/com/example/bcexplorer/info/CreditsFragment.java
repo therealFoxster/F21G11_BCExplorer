@@ -1,20 +1,29 @@
 package com.example.bcexplorer.info;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
+import com.example.bcexplorer.database.Location;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +77,13 @@ public class CreditsFragment extends Fragment {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.credits);
+
+        locationList = new ArrayList<>();
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            locationList = MainActivity.database.locationDAO().getAllLocations();
+        });
     }
 
     // Hiding save button
@@ -77,10 +93,63 @@ public class CreditsFragment extends Fragment {
         menu.clear();
     }
 
+    private List<Location> locationList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_credits, container, false);
+        View view = inflater.inflate(R.layout.fragment_credits, container, false);
+
+        ListView listViewDestinationSources = view.findViewById(R.id.listViewLocationSources);
+        CreditsItemAdapter adapter = new CreditsItemAdapter();
+        for (Location location: locationList) {
+            adapter.addCreditsItem(location.getLocationName(), (View view1) -> {
+                // Location name
+                Bundle bundle = new Bundle();
+                bundle.putString("NAME", location.getLocationName());
+
+                // Text content source
+                CreditsItemDetail overviewSource = new CreditsItemDetail("Overview text", location.getOverviewContentSource());
+                bundle.putSerializable("OVERVIEW", overviewSource);
+
+                // Image 1 source
+                CreditsItemDetail image1Source = new CreditsItemDetail(location.getImage1Name(), location.getImage1Source());
+                bundle.putSerializable("IMAGE1", image1Source);
+
+                // Image 2 source
+                CreditsItemDetail image2Source;
+                if (location.getImage2Name() != null) {
+                    if (location.getImage2Source() != null) { // Exists and has source
+                        image2Source = new CreditsItemDetail(location.getImage2Name(), location.getImage2Source());
+                    } else { // Exists but has no source
+                        image2Source = new CreditsItemDetail(location.getImage2Name(), "Unknown");
+                    }
+                    bundle.putSerializable("IMAGE2", image2Source);
+                }
+
+                // Image 3 source
+                CreditsItemDetail image3Source;
+                if (location.getImage2Name() != null) {
+                    if (location.getImage2Source() != null) { // Exists and has source
+                        image3Source = new CreditsItemDetail(location.getImage3Name(), location.getImage3Source());
+                    } else { // Exists but has no source
+                        image3Source = new CreditsItemDetail(location.getImage3Name(), "Unknown");
+                    }
+                    bundle.putSerializable("IMAGE3", image3Source);
+                }
+
+                Intent detailsActivity = new Intent(getContext(), CreditsItemDetailsActivity.class);
+                detailsActivity.putExtras(bundle);
+
+                startActivity(detailsActivity);
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+
+            });
+        }
+        // TODO: Add extra credits items (if any) bellow this line
+
+        listViewDestinationSources.setAdapter(adapter);
+        return view;
     }
 }

@@ -88,7 +88,7 @@ public class SavedItemRecyclerViewAdapter extends RecyclerView.Adapter<SavedItem
 
         // Save button's click listener
         imageViewSaveIcon.setOnClickListener((View view1) -> {
-            Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(holder.savedItemView.getContext(), String.format("Removed %s from saved list", locationList.get(position).getLocationName()), Toast.LENGTH_LONG).show();
 
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             executorService.execute(() -> {

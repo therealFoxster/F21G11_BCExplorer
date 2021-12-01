@@ -81,8 +81,6 @@ public class InfoFragment extends Fragment{
 
         // Credits infoItem
         infoItemAdapter.addInfoItem(new InfoItem(R.drawable.ic_info, R.string.credits), (View view2) -> {
-            Toast.makeText(view2.getContext(), "Credits view to be implemented", Toast.LENGTH_SHORT).show();
-
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
                     replace(((ViewGroup) getView().getParent()).getId(), new CreditsFragment(), "CREDITS_FRAGMENT").addToBackStack("info").commit();

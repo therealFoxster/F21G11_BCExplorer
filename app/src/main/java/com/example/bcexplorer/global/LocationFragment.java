@@ -83,6 +83,7 @@ public class LocationFragment extends Fragment {
     }
 
     private static String locationID;
+    private static String locationName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class LocationFragment extends Fragment {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
+            locationName = location.getLocationName();
             locationIsSaved = location.isSaved();
         });
     }
@@ -287,7 +289,7 @@ public class LocationFragment extends Fragment {
 
                 // If save icon is visible (location is not saved)
                 if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_save).getConstantState()) {
-                    Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), String.format("Added %s to saved list", locationName), Toast.LENGTH_LONG).show();
                     item.setIcon(R.drawable.ic_location_unsave); // Change icon to unsave
 
                     // Set saved status in database
@@ -299,7 +301,7 @@ public class LocationFragment extends Fragment {
                 }
                 // If unsave icon is visible (location is already saved)
                 else if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_unsave).getConstantState()) {
-                    Toast.makeText(getActivity(), "Unsaved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), String.format("Removed %s from saved list", locationName), Toast.LENGTH_LONG).show();
                     item.setIcon(R.drawable.ic_location_save); // Change icon to save
 
                     // Set unsaved status in database

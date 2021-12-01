@@ -115,20 +115,32 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager.addOnBackStackChangedListener(() -> {
             // Hides back button if at home fragment
-            if (getSupportFragmentManager().getBackStackEntryCount() < 1) {
                 switch (bottomNavigationViewPager.getCurrentItem()) {
                     case 0:
-                        actionBar.setTitle(R.string.home);
+                        Fragment locationFragment = fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
+                        if (locationFragment == null) { // Location fragment is not visible
+                            actionBar.setTitle(R.string.home);
+                            hideBackButton();
+                        } else if (locationFragment.isVisible())
+                            actionBar.setTitle(R.string.location);
                         break;
                     case 1:
-                        actionBar.setTitle(R.string.saved);
+                        Fragment savedLocationFragment = fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+                        if (savedLocationFragment == null) {
+                            actionBar.setTitle(R.string.saved);
+                            hideBackButton();
+                        } else if (savedLocationFragment.isVisible())
+                            actionBar.setTitle(R.string.location);
                         break;
                     case 2:
-                        actionBar.setTitle(R.string.info);
+                        Fragment creditsFragment = fragmentManager.findFragmentByTag("CREDITS_FRAGMENT");
+                        if (creditsFragment == null) {
+                            actionBar.setTitle(R.string.info);
+                            hideBackButton();
+                        } else if (creditsFragment.isVisible())
+                            actionBar.setTitle(R.string.credits);
                         break;
                 }
-                hideBackButton();
-            }
         });
 
     }

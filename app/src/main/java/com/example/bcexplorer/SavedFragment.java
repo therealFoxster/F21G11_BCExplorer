@@ -45,7 +45,7 @@ public class SavedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         b = FragmentSavedBinding.inflate(inflater, container, false);
-        Log.d("SAVED_FRAGMENT", "SavedFragment created");
+//        Log.d("SAVED_FRAGMENT", "SavedFragment created");
         initAdapter();
         setupRecyclerView();
         checkSavedItems();
@@ -56,7 +56,7 @@ public class SavedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("SAVED_FRAGMENT", "SavedFragment resumed");
+//        Log.d("SAVED_FRAGMENT", "SavedFragment resumed");
         initAdapter();
         setupRecyclerView();
         checkSavedItems();
@@ -144,17 +144,13 @@ public class SavedFragment extends Fragment {
         executorService.execute(() -> {
             List<Location> locationList = MainActivity.database.locationDAO().getSavedLocations();
             SavedItemRecyclerViewAdapter adapter = new SavedItemRecyclerViewAdapter(locationList, requireContext(), (ViewGroup) getView().getParent());
-            Log.d("SAVED_FRAGMENT", "saved locations: " + locationList.size());
-            ((AppCompatActivity) requireContext()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
-                    b.recyclerViewSaved.setAdapter(adapter);
-                }
-            });
 
-            noSavedDestinations = locationList.isEmpty();
-            checkSavedItems();
+            ((AppCompatActivity) requireContext()).runOnUiThread(() -> {
+                b.recyclerViewSaved.setLayoutManager(new LinearLayoutManager(b.recyclerViewSaved.getContext()));
+                b.recyclerViewSaved.setAdapter(adapter);
+                noSavedDestinations = locationList.isEmpty();
+                checkSavedItems();
+            });
         });
     }
 
@@ -170,14 +166,15 @@ public class SavedFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 //        Log.d("SAVED_FRAGMENT", "Creating options menu");
-        menu.findItem(R.id.location_save).setVisible(false);
+        if (menu != null && menu.findItem(R.id.location_save) != null)
+            menu.findItem(R.id.location_save).setVisible(false);
     }
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
 //        Log.d("SAVED_FRAGMENT", "Preparing options menu");
-        if (menu != null)
+        if (menu != null && menu.findItem(R.id.location_save) != null)
             menu.findItem(R.id.location_save).setVisible(false);
     }
 

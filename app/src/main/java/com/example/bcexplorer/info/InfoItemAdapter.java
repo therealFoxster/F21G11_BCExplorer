@@ -55,6 +55,7 @@ public class InfoItemAdapter extends BaseAdapter {
         TextView textViewInfoItem = view.findViewById(R.id.textViewInfoItem);
 
         imageViewInfoItem.setColorFilter(Color.rgb(28,31,35));
+//        imageViewInfoItem.setColorFilter(R.color.purple_500); // #FF6200EE (purple 500)
         imageViewInfoItem.setImageResource(infoItemList.get(i).getIconImageResource());
         textViewInfoItem.setText(infoItemList.get(i).getTextResource());
 
