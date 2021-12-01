@@ -188,14 +188,10 @@ public class ExploreActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_location_save); // Change icon to save
 
                 // Set unsaved status in database
-
                 Utils.store(this, WHATS_NEW_LIST_TYPE, false);
                 Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 }

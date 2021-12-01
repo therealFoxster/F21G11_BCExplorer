@@ -7,54 +7,23 @@
     android:background="#ffffff"
     tools:context=".ListDetailActivity">
 
-  <RelativeLayout
-      android:id="@+id/top_layout_bottom_activity"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/saveBtnExplore"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/ic_baseline_bookmark_unselected_24"
-        app:tint="@color/gray" />
-
-    <TextView
-        android:id="@+id/topText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="20dp"
-        android:autoSizeTextType="uniform"
-        android:breakStrategy="balanced"
-        android:maxLines="1"
-        android:text="Home"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-  </RelativeLayout>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_below="@id/top_layout_bottom_activity"
       android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="230dp">
 
 
       <ImageView
           android:id="@+id/imageview"
           android:layout_width="match_parent"
-          android:layout_height="250dp"
+          android:layout_height="match_parent"
           android:scaleType="centerCrop"
-          android:src="@drawable/whats_new_whistler" />
+          android:src="@drawable/vancouver" />
 
       <TextView
           android:id="@+id/titleTxt"
@@ -77,10 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="20dp"
         android:gravity="start"
-        android:text="Lorem Ipsum is simply dummy text "
-         />
+        android:text="Lorem Ipsum is simply dummy text " />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -101,8 +69,7 @@
             android:gravity="center"
             android:text="Getting Around\nWhite Rock"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exploreBtn"
@@ -111,11 +78,10 @@
             android:layout_marginTop="20dp"
             android:text="Read More"
             android:textColor="@color/gray"
+            android:textStyle="bold"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/gray"
-            app:strokeWidth="1dp"
-            android:textStyle="bold"/>
-
+            app:strokeWidth="1dp" />
 
 
       </LinearLayout>
@@ -154,10 +120,10 @@
             android:layout_marginTop="20dp"
             android:text="Explore"
             android:textColor="@color/gray"
+            android:textStyle="bold"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/gray"
-            app:strokeWidth="1dp"
-            android:textStyle="bold"/>
+            app:strokeWidth="1dp" />
 
       </LinearLayout>
 
@@ -168,8 +134,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:visibility="gone"
         android:text="view all destinations"
+        android:visibility="gone"
         app:backgroundTint="@color/black" />
 
   </LinearLayout>

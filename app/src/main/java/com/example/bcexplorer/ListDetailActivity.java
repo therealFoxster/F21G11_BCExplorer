@@ -1,15 +1,20 @@
 package com.example.bcexplorer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.bcexplorer.databinding.ActivityListDetailBinding;
 import com.example.bcexplorer.utils.Utils;
+
+import java.util.Objects;
 
 public class ListDetailActivity extends AppCompatActivity {
 
@@ -24,13 +29,17 @@ public class ListDetailActivity extends AppCompatActivity {
         b = ActivityListDetailBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().hide();
+
 
         LIST_TYPE = getIntent().getStringExtra(Constants.PARAMS);
 
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (LIST_TYPE.equals(Constants.VANCOUVER)) {
-            b.topText.setText("City Guide Downtown Vancouver");
+            Objects.requireNonNull(getSupportActionBar())
+                    .setTitle("City Guide DT Vancouver");
             b.imageview.setImageResource(R.drawable.vancouver);
             b.titleTxt.setText("Downtown Vancouver");
             b.gettingAroundText.setText("Getting Around\nDT Vancouver");
@@ -42,7 +51,8 @@ public class ListDetailActivity extends AppCompatActivity {
         }
 
         if (LIST_TYPE.equals(Constants.WHITE_ROCK)) {
-            b.topText.setText("City Guide White Rock");
+            Objects.requireNonNull(getSupportActionBar())
+                    .setTitle("City Guide White Rock");
             b.imageview.setImageResource(R.drawable.white_rock);
             b.titleTxt.setText("White Rock");
             b.gettingAroundText.setText("Getting Around\nWhite Rock");
@@ -53,7 +63,8 @@ public class ListDetailActivity extends AppCompatActivity {
         }
 
         if (LIST_TYPE.equals(Constants.WHISTLER)) {
-            b.topText.setText("City Guide Whistler");
+            Objects.requireNonNull(getSupportActionBar())
+                    .setTitle("City Guide Whistler");
             b.imageview.setImageResource(R.drawable.whistler);
             b.titleTxt.setText("Whistler");
             b.gettingAroundText.setText("Getting Around\nWhistler");
@@ -63,37 +74,68 @@ public class ListDetailActivity extends AppCompatActivity {
                     "The hub of Whistler is a compact, chalet-style pedestrian village at the base of Whistler and Blackcomb mountains");
         }
 
+
+
         b.exploreBtn.setOnClickListener(exploreBtnClickListener());
         b.readMoreBtn.setOnClickListener(readMoreBtnClickListener());
 
-        Context context = ListDetailActivity.this;
 
-        if (Utils.getBoolean(context, LIST_TYPE, false)) {
-            b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_selected_24);
-            isSaved = true;
+
+    }
+
+
+    //saved button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_location_view, menu);
+        MenuItem item = menu.findItem(R.id.location_save);
+
+        if(Utils.getBoolean(this, LIST_TYPE))
+        {
+            item.setIcon(R.drawable.ic_location_unsave);
+        }
+        else
+        {
+            item.setIcon(R.drawable.ic_location_save);
         }
 
-        b.saveBtnExplore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isSaved) {
-                    b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_unselected_24);
-                    isSaved = false;
+        item.setVisible(true);
+        return true;
+    }
 
-                    Utils.store(context, LIST_TYPE, false);
-                    Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();
+    // Method that handles actionBar items
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
-                } else {
-                    b.saveBtnExplore.setImageResource(R.drawable.ic_baseline_bookmark_selected_24);
-                    isSaved = true;
+        if (id == android.R.id.home) { // Back button
+            finish();
+        }
+        else if(id == R.id.location_save)
+        {
+            // If save icon is visible (location is not saved)
+            if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_save).getConstantState()) {
+                item.setIcon(R.drawable.ic_location_unsave); // Change icon to unsave
 
-                    Utils.store(context, LIST_TYPE, true);
-                    Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
-                }
+                // Set saved status in database
+                Utils.store(this, LIST_TYPE, true);
+                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
             }
-        });
+            // If unsave icon is visible (location is already saved)
+            else if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_unsave).getConstantState()) {
+                item.setIcon(R.drawable.ic_location_save); // Change icon to save
 
+                // Set unsaved status in database
+
+                Utils.store(this, LIST_TYPE, false);
+                Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     boolean isSaved = false;

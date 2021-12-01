@@ -9,14 +9,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bcexplorer.Constants;
+import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.utils.ListItemModel;
+import com.example.bcexplorer.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter2.SavedItemViewHolder> {
     List<ListItemModel> itemModelList;
@@ -60,14 +66,57 @@ public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedIte
 
         CardView cardViewContainer = holder.savedItemView.findViewById(R.id.cardViewSavedItem);
 
+
         // Card's click listener
         cardViewContainer.setOnClickListener((View view1) -> {
 
+
         });
 
-        // Save button's click listener
+        // Unsaved button's click listener
         imageViewSaveIcon.setOnClickListener((View view1) -> {
-            Toast.makeText(holder.savedItemView.getContext(), "Save clicked", Toast.LENGTH_SHORT).show();
+
+            String LIST_TYPE = "";
+            switch(itemModelList.get(position).getItemTitle()){
+                case "Whistler":
+                    LIST_TYPE = Constants.WHISTLER;
+                    break;
+                case "Downtown Vancouver":
+                    LIST_TYPE = Constants.VANCOUVER;
+                    break;
+                case "White Rock":
+                    LIST_TYPE = Constants.WHITE_ROCK;
+                    break;
+
+                case "Getting Around Whistler":
+                    LIST_TYPE = Constants.GETTING_AROUND_WHISTLER;
+                    break;
+                case "Getting Around DT Vancouver":
+                    LIST_TYPE = Constants.GETTING_AROUND_VANCOUVER;
+                    break;
+                case "Getting Around White Rock":
+                    LIST_TYPE = Constants.GETTING_AROUND_WHITE_ROCK;
+                    break;
+
+                case "Vancouver is upping the steaks":
+                    LIST_TYPE = Constants.WHATS_NEW_VANCOUVER;
+                    break;
+                case "Like Darts But More Canadian":
+                    LIST_TYPE = Constants.WHATS_NEW_WHISTLER;
+                    break;
+                case "The Pond at BFS":
+                    LIST_TYPE = Constants.WHATS_NEW_WHITE_ROCK;
+                    break;
+            }
+            Utils.store(context, LIST_TYPE, false);
+            Toast.makeText(holder.savedItemView.getContext(), itemModelList.get(position).getItemTitle()+" has Removed from saved", Toast.LENGTH_SHORT).show();
+
+            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    MainActivity.refreshSavedPage();
+                }
+            });
         });
     }
 

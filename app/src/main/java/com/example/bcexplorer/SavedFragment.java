@@ -94,13 +94,13 @@ public class SavedFragment extends Fragment {
         // GETTING_AROUND_VANCOUVER
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_VANCOUVER))
             arrayList.add(new ListItemModel("Getting Around DT Vancouver",
-                    "Maps and Tips.",
+                    "Maps and Tips",
                     R.drawable.map));
 
         // GETTING_AROUND_WHITE ROCK
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_WHITE_ROCK))
             arrayList.add(new ListItemModel("Getting Around White Rock",
-                    "Maps and Tips.",
+                    "Maps and Tips",
                     R.drawable.map));
 
         // WHATS_NEW_WHISTLER
@@ -118,7 +118,7 @@ public class SavedFragment extends Fragment {
         // WHATS_NEW_WHITE ROCK
         if (Utils.getBoolean(context, Constants.WHATS_NEW_WHITE_ROCK))
             arrayList.add(new ListItemModel("The Pond at BFS",
-                    "What's New in Whistler",
+                    "What's New in White Rock",
                     R.drawable.whats_new_white_rock));
 
         Collections.sort(arrayList, new Comparator<ListItemModel>() {

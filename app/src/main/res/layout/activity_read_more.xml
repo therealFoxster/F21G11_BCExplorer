@@ -1,54 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".ReadMoreActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <RelativeLayout
-    android:id="@+id/top_layout_bottom_activity"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        tools:context=".ReadMoreActivity"
+        android:layout_marginBottom="4dp">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/saveBtnExplore"
-            android:src="@drawable/ic_baseline_bookmark_unselected_24"
-            app:tint="@color/gray" />
 
-        <TextView
-            android:id="@+id/topText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="20dp"
-            android:autoSizeTextType="uniform"
-            android:breakStrategy="balanced"
-            android:maxLines="1"
-            android:text="Home"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_layout_bottom_activity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+          android:layout_marginBottom="100dp">
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/mapImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="350dp"
             android:scaleType="centerCrop"
             android:src="@drawable/map" />
 
@@ -61,9 +37,11 @@
             android:layout_marginTop="20dp"
             android:gravity="start"
             android:text="From The Airport"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/airportTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,9 +58,11 @@
             android:layout_marginTop="20dp"
             android:gravity="start"
             android:text="Taxis"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/taxisTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,9 +79,11 @@
             android:layout_marginTop="20dp"
             android:gravity="start"
             android:text="Bikes"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/bikesTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,9 +100,11 @@
             android:layout_marginTop="20dp"
             android:gravity="start"
             android:text="Walking"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/walkTxt"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,6 +113,9 @@
             android:gravity="start"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. " />
 
-    </LinearLayout>
 
-</RelativeLayout>
+      </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
