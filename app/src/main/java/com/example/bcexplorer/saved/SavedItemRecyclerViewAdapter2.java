@@ -118,6 +118,8 @@ public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedIte
                 }
             });
         });
+
+
     }
 
     @Override

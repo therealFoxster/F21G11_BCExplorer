@@ -58,6 +58,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHITE_ROCK));
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
         view.findViewById(R.id.vancouverCardView).setOnClickListener(new View.OnClickListener() {
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.VANCOUVER));
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
         view.findViewById(R.id.whistlerCardView).setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHISTLER));
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
 
