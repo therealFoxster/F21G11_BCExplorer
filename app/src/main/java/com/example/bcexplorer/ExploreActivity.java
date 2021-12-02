@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +20,17 @@ import android.widget.Toast;
 
 import com.example.bcexplorer.databinding.ActivityExploreBinding;
 import com.example.bcexplorer.utils.Utils;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
-public class ExploreActivity extends AppCompatActivity {
+public class ExploreActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ActivityExploreBinding b;
     String LIST_TYPE = Constants.WHITE_ROCK;
     String WHATS_NEW_LIST_TYPE = Constants.WHATS_NEW_WHITE_ROCK;
@@ -28,19 +39,39 @@ public class ExploreActivity extends AppCompatActivity {
     String EMAIL = "";
 
 
+    GoogleMap googleMap;
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    private void initGoogleMap(Bundle savedInstanceState) {
+    // *** IMPORTANT ***
+    // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
+    // objects or sub-Bundles.
+    Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+        mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+    }
+        b.mapView2.onCreate(mapViewBundle);
+
+    Handler handler = new Handler(this.getMainLooper());
+        handler.post(() -> {
+        b.mapView2.getMapAsync(this);
+    });
+}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityExploreBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
+        initGoogleMap(savedInstanceState);
 
         LIST_TYPE = getIntent().getStringExtra(Constants.PARAMS);
 
         if (LIST_TYPE.equals(Constants.VANCOUVER)) {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("What's New in DT Vancouver");
-            b.mainImageview.setImageResource(R.drawable.whats_new_vancouver);
+//            b.mainImageview.setImageResource(R.drawable.whats_new_vancouver);
             b.titleTxt.setText("Black + Blue");
             b.middleText.setText("Vancouver is upping the steaks");
             b.middleDesc.setText("Black + Blue is Glowbal Group’s most expansive restaurant to-date.. Sitting next to sister restaurants COAST and Italian Kitchen, they are all located on Vancouver’s emerging restaurant row, Alberni Street.");
@@ -58,7 +89,7 @@ public class ExploreActivity extends AppCompatActivity {
         if (LIST_TYPE.equals(Constants.WHITE_ROCK)) {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("What's New in White Rock");
-            b.mainImageview.setImageResource(R.drawable.whats_new_white_rock);
+//            b.mainImageview.setImageResource(R.drawable.whats_new_white_rock);
             b.titleTxt.setText(" The Pond at BFS");
             b.middleText.setText("Blue Frog Studios");
             b.middleDesc.setText("Canada's Hottest Live Recording Theatre. The world famous multi-media recording studios and event venue located in the quaint beachside arts community of White Rock, BC (just south of Vancouver). This world-class studio has been home to many, many recordings by international and award winning recording artists.");
@@ -77,7 +108,7 @@ public class ExploreActivity extends AppCompatActivity {
         if (LIST_TYPE.equals(Constants.WHISTLER)) {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("What's New in Whistler");
-            b.mainImageview.setImageResource(R.drawable.whats_new_whistler);
+//            b.mainImageview.setImageResource(R.drawable.whats_new_whistler);
             b.titleTxt.setText(" Forged Axe Throwing");
             b.middleText.setText("Like Darts But More Canadian");
             b.middleDesc.setText("Forged Axe Throwing offers drop-ins, party bookings, and league play in Whistler, BC. No experience necessary — just bring closed-toed shoes and an awesome attitude, and we show you the rest.");
@@ -194,5 +225,83 @@ public class ExploreActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        b.mapView2.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        b.mapView2.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        b.mapView2.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        b.mapView2.onStop();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(getLocationFromAddress(this, "1328 Johnston Rd, White Rock, BC V4B 3Z2")).title("The Pond at BFS"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(this, "1328 Johnston Rd, White Rock, BC V4B 3Z2"), 15));
+    }
+
+    @Override
+    public void onPause() {
+        b.mapView2.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        b.mapView2.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        b.mapView2.onLowMemory();
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 }

@@ -21,12 +21,10 @@
         android:orientation="vertical"
           android:layout_marginBottom="100dp">
 
-        <ImageView
-            android:id="@+id/mapImage"
+        <com.example.bcexplorer.global.CustomMapView
+            android:id="@+id/mapView1"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/map" />
+            android:layout_height="350dp" />
 
         <TextView
             android:id="@+id/middleText"

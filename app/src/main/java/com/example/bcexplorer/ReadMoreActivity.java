@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,14 +15,40 @@ import android.widget.Toast;
 
 import com.example.bcexplorer.databinding.ActivityReadMoreBinding;
 import com.example.bcexplorer.utils.Utils;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
-public class ReadMoreActivity extends AppCompatActivity {
+public class ReadMoreActivity extends AppCompatActivity implements OnMapReadyCallback {
     private ActivityReadMoreBinding b;
+
+    GoogleMap googleMap;
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     String LIST_TYPE = Constants.VANCOUVER;
     String GETTING_AROUND_LIST_TYPE = Constants.GETTING_AROUND_VANCOUVER;
+
+    private void initGoogleMap(Bundle savedInstanceState) {
+        // *** IMPORTANT ***
+        // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
+        // objects or sub-Bundles.
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+        b.mapView1.onCreate(mapViewBundle);
+
+        Handler handler = new Handler(this.getMainLooper());
+        handler.post(() -> {
+            b.mapView1.getMapAsync(this);
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +56,7 @@ public class ReadMoreActivity extends AppCompatActivity {
         b = ActivityReadMoreBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
+        initGoogleMap(savedInstanceState);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,7 +66,7 @@ public class ReadMoreActivity extends AppCompatActivity {
         if (LIST_TYPE.equals(Constants.WHITE_ROCK)) {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("Getting Around White Rock");
-            b.mapImage.setImageResource(R.drawable.vancouver);
+//            b.mapImage.setImageResource(R.drawable.vancouver);
             b.airportTxt.setText("The nearest airport to White Rock is Bellingham (BLI). However, there are better options for getting to White Rock. TransLink CA operates a bus from Bridgeport Station @ Bay 9 to White Rock Centre @ Bay 10 every 15 minutes. Tickets cost $3 and the journey takes 45 min");
             b.taxisTxt.setText("Uber and Lyft are a great option but sometimes are saturated. Local taxi services can be the next best choice");
             b.bikesTxt.setText("One of the best ways to explore White Rock and the Semiahmoo Peninsula is by bike. Believe it or not, it IS possible to go for a great bike ride in White Rock and avoid climbing any major hills!");
@@ -49,7 +79,7 @@ public class ReadMoreActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("Getting Around DT Vancouver");
 
-            b.mapImage.setImageResource(R.drawable.vancouver);
+//            b.mapImage.setImageResource(R.drawable.vancouver);
             b.airportTxt.setText("With a short 30 min commute from the airport by public transport or car, the location its a very good location that won't burn your pockets to get to");
             b.taxisTxt.setText("Taxi operators can accommodate wheelchairs and mobility aids. Below is a list of taxi operators who are licensed to pick up passengers from YVR. Taxis serving the South Terminal include Richmond Taxi, Garden City Cabs and Kimber Cabs.");
             b.bikesTxt.setText("Bike lanes in the downtown core make cycling an easy way to move around within minutes and choose different destinations within the area");
@@ -61,7 +91,7 @@ public class ReadMoreActivity extends AppCompatActivity {
         if (LIST_TYPE.equals(Constants.WHISTLER)) {
             Objects.requireNonNull(getSupportActionBar())
                     .setTitle("Getting Around Whistler");
-            b.mapImage.setImageResource(R.drawable.vancouver);
+//            b.mapImage.setImageResource(R.drawable.vancouver);
             b.airportTxt.setText("The nearest airport its the YVR airport. Several shuttles run from the airport to Whistler Village which is the most important part of the town. It's a 2 hour drive");
             b.taxisTxt.setText("Take advantage of free transit shuttle services connecting ski lifts and popular parks (seasonal)");
             b.bikesTxt.setText("Use the car-free Valley Trail network and the public transit services to explore lakes, parks and other neighbourhoods");
@@ -128,5 +158,84 @@ public class ReadMoreActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        b.mapView1.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        b.mapView1.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        b.mapView1.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        b.mapView1.onStop();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(getLocationFromAddress(this, "White Rock, BC, Canada")).title("White Rock"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(this, "White Rock, BC, Canada"), 15));
+    }
+
+    @Override
+    public void onPause() {
+        b.mapView1.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        b.mapView1.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        b.mapView1.onLowMemory();
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
+
 }
 

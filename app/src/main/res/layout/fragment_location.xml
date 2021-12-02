@@ -127,7 +127,8 @@
                 android:layout_height="250dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="22dp"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="18dp"
+                android:nestedScrollingEnabled="true">
 
                 <TextView
                     android:id="@+id/mapsPlaceHolder"
@@ -138,6 +139,17 @@
                     android:text="Maps placeholder"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_body" />
+
+                <com.example.bcexplorer.global.CustomMapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:clickable="true"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
