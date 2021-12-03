@@ -191,7 +191,6 @@ public class ReadMoreActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions().position(locationLatLng).title(locationName));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 15));
-
     }
 
     @Override
