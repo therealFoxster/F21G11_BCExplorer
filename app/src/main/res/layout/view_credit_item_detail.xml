@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:text="TextView"
             android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:textColor="@color/black"
             android:textSize="@dimen/text_body" />
 
@@ -27,8 +28,11 @@
             android:layout_weight="1"
             android:text="TextView"
             android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:textSize="@dimen/text_body_small"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:textColorLink="@color/purple_700"
+            android:autoLink="all"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

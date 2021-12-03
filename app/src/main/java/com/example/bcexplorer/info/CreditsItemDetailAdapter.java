@@ -53,7 +53,7 @@ public class CreditsItemDetailAdapter extends BaseAdapter {
 
         header.setText(itemDetails.get(position).getTitle());
         content.setText(itemDetails.get(position).getContent());
-        Linkify.addLinks(content, Linkify.WEB_URLS);
+//        Linkify.addLinks(content, Linkify.WEB_URLS);
 
         return convertView;
     }

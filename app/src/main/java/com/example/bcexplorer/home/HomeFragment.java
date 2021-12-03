@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bcexplorer.Constants;
@@ -39,6 +41,9 @@ import java.util.concurrent.Executors;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    private static final String TAG = "HOME_FRAGMENT";
+
     // Featured section
     private ViewPager viewPagerFeatured;
     private CardPagerAdapter cardPagerAdapterFeatured;
@@ -58,7 +63,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHITE_ROCK));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
         view.findViewById(R.id.vancouverCardView).setOnClickListener(new View.OnClickListener() {
@@ -66,7 +71,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.VANCOUVER));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
         view.findViewById(R.id.whistlerCardView).setOnClickListener(new View.OnClickListener() {
@@ -74,7 +79,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHISTLER));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
 
@@ -86,6 +91,40 @@ public class HomeFragment extends Fragment {
         viewPagerExploreCities = view.findViewById(R.id.viewPagerExploreCities);
 //        setupExploreCities();
 
+        ListView listViewCategories = view.findViewById(R.id.listViewCategories);
+        listViewCategories.setAdapter(new CategoryItemAdapter(categoryList));
+
+        // Changing height depending on number of items
+        int heightDP = 50 * categoryList.size();
+        ViewGroup.LayoutParams layoutParams = listViewCategories.getLayoutParams();
+        layoutParams.height = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, heightDP, getResources().getDisplayMetrics()));
+        listViewCategories.setLayoutParams(layoutParams);
+
+        listViewCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                LocationListFragment fragment = new LocationListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("CATEGORY", categoryList.get(position));
+                fragment.setArguments(bundle);
+
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                        replace(((ViewGroup) getView().getParent()).getId(), fragment, "LOCATION_LIST_FRAGMENT").addToBackStack("home").commit();
+
+//                ExecutorService executorService = Executors.newSingleThreadExecutor();
+//                executorService.execute(() -> {
+//                    List<Location> locationList = MainActivity.database.locationDAO().getLocationsMatchingCategory(categoryList.get(position));
+//                    for (Location location : locationList) {
+//                        Log.d(TAG, location.getLocationName());
+//                    }
+//                });
+//                Toast.makeText(getContext(), "" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -96,6 +135,9 @@ public class HomeFragment extends Fragment {
                 replace(((ViewGroup) getView().getParent()).getId(), new LocationFragment(), "LOCATION_FRAGMENT").addToBackStack("home").commit();
     };
 
+    private static List<Location> locationList = new ArrayList<>();
+    private static List<String> categoryList = new ArrayList<>();
+
     private void setupFeatured() {
         // Setting viewPager's height to 222dp
         int heightDP = 222;
@@ -105,32 +147,20 @@ public class HomeFragment extends Fragment {
 
         cardPagerAdapterFeatured = new CardPagerAdapter();
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            // Randomize cards
-            int numberOfCards = 5;
-            List<Integer> numbers = new ArrayList<>();
+        for (Location location : locationList) {
+            cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), (View view) -> {
+                // OnClickListener that launches location view
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                LocationFragment locationFragment = new LocationFragment();
 
-            for (int i = 1; i <= numberOfCards; i++)
-                numbers.add(i);
+                Bundle bundle = new Bundle();
+                bundle.putString("LOCATION_ID", location.getLocationID());
+                locationFragment.setArguments(bundle);
 
-            Collections.shuffle(numbers);
-            for (int i = 0; i < numberOfCards; i++) {
-                Location location = MainActivity.database.locationDAO().getLocationWithID("" + numbers.get(i));
-                cardPagerAdapterFeatured.addCardItem(new CardItem(location.getLocationName(), String.format("%s in %s", location.getCategory(), location.getCity()), location.getImage1Name()), (View view) -> {
-                    // OnClickListener that launches location view
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    LocationFragment locationFragment = new LocationFragment();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("LOCATION_ID", location.getLocationID());
-                    locationFragment.setArguments(bundle);
-
-                    fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
-                            replace(((ViewGroup) getView().getParent()).getId(), locationFragment, "LOCATION_FRAGMENT").addToBackStack("home").commit();
-                });
-            }
-        });
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in, R.animator.nav_default_exit_anim, R.animator.nav_default_pop_enter_anim, R.anim.slide_out).
+                        replace(((ViewGroup) getView().getParent()).getId(), locationFragment, "LOCATION_FRAGMENT").addToBackStack("home").commit();
+            });
+        }
 
         viewPagerFeatured.setAdapter(cardPagerAdapterFeatured);
 
@@ -220,6 +250,24 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            // Randomize cards
+            int numberOfCards = 5;
+            List<Integer> numbers = new ArrayList<>();
+
+            for (int i = 1; i <= numberOfCards; i++)
+                numbers.add(i);
+
+            Collections.shuffle(numbers);
+            for (int i = 0; i < numberOfCards; i++) {
+                Location location = MainActivity.database.locationDAO().getLocationWithID("" + numbers.get(i));
+                locationList.add(location);
+            }
+
+            categoryList = MainActivity.database.locationDAO().getAllCategories();
+        });
 
     }
 

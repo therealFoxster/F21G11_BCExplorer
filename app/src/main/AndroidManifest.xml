@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BCExplorer">
         <activity
+            android:name=".global.LocationActivity"
+            android:exported="false" />
+        <activity
             android:name=".info.CreditsItemDetailsActivity"
             android:exported="false" />
         <activity

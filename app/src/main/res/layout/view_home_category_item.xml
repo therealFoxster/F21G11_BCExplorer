@@ -3,20 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/imageViewCategoryIcon"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_park_24"
+        app:tint="@color/purple_500" />
 
     <TextView
-        android:id="@+id/textViewCreditsItem"
+        android:id="@+id/textViewHomeCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginStart="12dp"
         android:layout_marginRight="10dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="@dimen/text_body"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/forwardIcon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCategoryIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -35,8 +46,9 @@
         android:layout_height="0.75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="@+id/textViewCreditsItem"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCategoryIcon"
         app:srcCompat="@drawable/color_divider"
         app:tint="@color/gray1" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    tools:context=".home.HomeFragment"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -74,7 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:overScrollMode="never">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -208,18 +210,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Placeholder TextView -->
-            <TextView
-                android:id="@+id/textView4"
+            <ListView
+                android:id="@+id/listViewCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="Placeholder TextView" />
+                android:divider="@null"
+                android:layout_marginBottom="12dp"/>
+
 
         </LinearLayout>
     </ScrollView>

@@ -61,12 +61,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.bottom_nav_home:
                     LocationFragment locationFragment = (LocationFragment) getSupportFragmentManager().findFragmentByTag("LOCATION_FRAGMENT");
+                    Fragment locationListFragment = fragmentManager.findFragmentByTag("LOCATION_LIST_FRAGMENT");
 
                     // Show back button if there are items in the backstack and locationFragment is visible
                     if (fragmentManager.getBackStackEntryCount() > 0 && locationFragment != null) {
                         actionBar.setTitle(R.string.location);
                         showBackButton();
-                    } else if (locationFragment == null) { // Location fragment not visible (home fragment is visible
+                    } else if (fragmentManager.getBackStackEntryCount() > 0 && locationListFragment != null) {
+                        actionBar.setTitle(R.string.locations);
+                        showBackButton();
+                    }
+                    else if (locationFragment == null) { // Location fragment not visible (home fragment is visible
                         actionBar.setTitle(R.string.home);
                         hideBackButton();
                     }
@@ -118,11 +123,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (bottomNavigationViewPager.getCurrentItem()) {
                     case 0:
                         Fragment locationFragment = fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
-                        if (locationFragment == null) { // Location fragment is not visible
+                        Fragment locationListFragment = fragmentManager.findFragmentByTag("LOCATION_LIST_FRAGMENT");
+                        if (locationFragment == null && locationListFragment == null) { // Location fragment and location list fragment are not visible
                             actionBar.setTitle(R.string.home);
                             hideBackButton();
-                        } else if (locationFragment.isVisible())
+                        } else if (locationFragment != null)
                             actionBar.setTitle(R.string.location);
+
                         break;
                     case 1:
                         Fragment savedLocationFragment = fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
@@ -179,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 LocationFragment locationFragment = (LocationFragment) fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
                 CreditsFragment creditsFragment = (CreditsFragment) fragmentManager.findFragmentByTag("CREDITS_FRAGMENT");
                 LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+                Fragment locationListFragment = fragmentManager.findFragmentByTag("LOCATION_LIST_FRAGMENT");
 
                 // Pop backstack until encounter correct backstack entry
                 if (locationFragment != null)
@@ -187,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack("info", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 else if (savedLocationFragment != null)
                     getSupportFragmentManager().popBackStack("saved", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                else if (locationListFragment != null)
+                    getSupportFragmentManager().popBackStack("home", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 break;
         }
 
@@ -264,6 +274,15 @@ public class MainActivity extends AppCompatActivity {
 //                bottomNavigationView.setSelectedItemId(selectedItem);
 //            }
 //        }, ms + 50);
+    }
+
+    public static void refreshLocationListPage() {
+        Fragment locationListFragment = fragmentManager.findFragmentByTag("LOCATION_LIST_FRAGMENT");
+        if (locationListFragment != null) {
+            locationListFragment.onResume();
+            locationListFragment.onResume();
+            locationListFragment.onResume();
+        }
     }
 
 }

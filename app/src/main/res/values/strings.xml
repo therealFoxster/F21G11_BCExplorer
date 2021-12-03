@@ -23,6 +23,8 @@
     <string name="textViewHomeFeatured">Featured Destinations</string>
     <string name="textViewHomeExploreCities">Explore BC Cities</string>
     <string name="textViewHomeCategories">Categories</string>
+    <string name="textViewCategory">Category</string>
+    <string name="locations">Locations</string>
 
     <!-- Saved -->
     <string name="saved">Saved</string>

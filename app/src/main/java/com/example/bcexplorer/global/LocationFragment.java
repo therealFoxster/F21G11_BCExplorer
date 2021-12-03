@@ -252,8 +252,9 @@ public class LocationFragment extends Fragment {
 
         LocationFragment locationFragment = (LocationFragment) fragmentManager.findFragmentByTag("LOCATION_FRAGMENT");
         LocationFragment savedLocationFragment = (LocationFragment) fragmentManager.findFragmentByTag("SAVED_LOCATION_FRAGMENT");
+        Fragment locationListLocationFragment = fragmentManager.findFragmentByTag("LOCATION_LIST_LOCATION_FRAGMENT");
 
-        if (MainActivity.bottomNavigationViewPager.getCurrentItem() == 0 && locationFragment == null) // On home page
+        if (MainActivity.bottomNavigationViewPager.getCurrentItem() == 0 && locationFragment == null && locationListLocationFragment == null) // On home page
             item.setVisible(false);
         else if (MainActivity.bottomNavigationViewPager.getCurrentItem() == 1 && savedLocationFragment == null) // On saved page
             item.setVisible(false);
