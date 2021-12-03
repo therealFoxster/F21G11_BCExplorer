@@ -110,7 +110,6 @@ public class ListDetailActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) { // Back button
             finish();
-            overridePendingTransition(R.anim.none, R.anim.exit_rev);
         }
         else if(id == R.id.location_save)
         {
@@ -147,7 +146,6 @@ public class ListDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(ListDetailActivity.this, ExploreActivity.class)
                         .putExtra(Constants.PARAMS, LIST_TYPE));
-                overridePendingTransition(R.anim.enter, R.anim.none);
             }
         };
     }
@@ -159,7 +157,6 @@ public class ListDetailActivity extends AppCompatActivity {
 
                 startActivity(new Intent(ListDetailActivity.this, ReadMoreActivity.class)
                         .putExtra(Constants.PARAMS, LIST_TYPE));
-                overridePendingTransition(R.anim.enter, R.anim.none);
             }
         };
     }

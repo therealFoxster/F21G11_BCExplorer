@@ -1,4 +1,4 @@
-package com.example.bcexplorer;
+package com.example.bcexplorer.saved;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,20 +9,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.bcexplorer.Constants;
+import com.example.bcexplorer.global.MainActivity;
+import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.databinding.FragmentSavedBinding;
-import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter;
-import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter2;
-import com.example.bcexplorer.utils.CustomAdapter;
 import com.example.bcexplorer.utils.ListItemModel;
 import com.example.bcexplorer.utils.Utils;
 
@@ -89,19 +86,19 @@ public class SavedFragment extends Fragment {
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_WHISTLER))
             arrayList.add(new ListItemModel("Getting Around Whistler",
                     "Maps and Tips",
-                    R.drawable.map));
+                    R.drawable.map_whistler));
 
         // GETTING_AROUND_VANCOUVER
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_VANCOUVER))
             arrayList.add(new ListItemModel("Getting Around DT Vancouver",
                     "Maps and Tips",
-                    R.drawable.map));
+                    R.drawable.map_dtvancouver));
 
         // GETTING_AROUND_WHITE ROCK
         if (Utils.getBoolean(context, Constants.GETTING_AROUND_WHITE_ROCK))
             arrayList.add(new ListItemModel("Getting Around White Rock",
                     "Maps and Tips",
-                    R.drawable.map));
+                    R.drawable.map_whiterock));
 
         // WHATS_NEW_WHISTLER
         if (Utils.getBoolean(context, Constants.WHATS_NEW_WHISTLER))

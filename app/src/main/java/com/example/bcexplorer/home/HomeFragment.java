@@ -18,11 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.bcexplorer.Constants;
 import com.example.bcexplorer.ListDetailActivity;
-import com.example.bcexplorer.MainActivity;
+import com.example.bcexplorer.global.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.LocationFragment;
@@ -63,7 +62,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHITE_ROCK));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
         view.findViewById(R.id.vancouverCardView).setOnClickListener(new View.OnClickListener() {
@@ -71,7 +69,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.VANCOUVER));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
         view.findViewById(R.id.whistlerCardView).setOnClickListener(new View.OnClickListener() {
@@ -79,7 +76,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(requireContext(), ListDetailActivity.class)
                         .putExtra(Constants.PARAMS, Constants.WHISTLER));
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
             }
         });
 

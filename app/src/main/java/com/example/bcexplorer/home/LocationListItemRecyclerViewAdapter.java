@@ -3,7 +3,6 @@ package com.example.bcexplorer.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bcexplorer.MainActivity;
+import com.example.bcexplorer.global.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.LocationActivity;
 import com.example.bcexplorer.global.LocationFragment;
-import com.example.bcexplorer.info.CreditsItemDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

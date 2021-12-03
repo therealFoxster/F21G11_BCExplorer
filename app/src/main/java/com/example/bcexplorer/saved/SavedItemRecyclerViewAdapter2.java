@@ -14,15 +14,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcexplorer.Constants;
-import com.example.bcexplorer.MainActivity;
+import com.example.bcexplorer.global.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.utils.ListItemModel;
 import com.example.bcexplorer.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class SavedItemRecyclerViewAdapter2 extends RecyclerView.Adapter<SavedItemRecyclerViewAdapter2.SavedItemViewHolder> {
     List<ListItemModel> itemModelList;

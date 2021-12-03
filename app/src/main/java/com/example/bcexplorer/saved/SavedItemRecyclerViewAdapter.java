@@ -2,7 +2,6 @@ package com.example.bcexplorer.saved;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bcexplorer.MainActivity;
+import com.example.bcexplorer.global.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.LocationFragment;

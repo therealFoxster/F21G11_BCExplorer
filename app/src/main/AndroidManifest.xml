@@ -25,7 +25,7 @@
             android:name=".ListDetailActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".global.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCQy9t6e_pbmT9pHibF1o9kuCAJTeBX5-4" />
+            android:value="AIzaSyAmk2UrQDl2zrdQuT50VZBJFIGMEAikYtg" />
     </application>
 
 </manifest>

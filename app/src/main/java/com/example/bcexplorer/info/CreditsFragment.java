@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.bcexplorer.MainActivity;
+import com.example.bcexplorer.global.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 
@@ -143,7 +142,7 @@ public class CreditsFragment extends Fragment {
                 detailsActivity.putExtras(bundle);
 
                 startActivity(detailsActivity);
-                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.none);
 
             });
         }

@@ -129,7 +129,6 @@ public class ReadMoreActivity extends AppCompatActivity implements OnMapReadyCal
 
         if (id == android.R.id.home) { // Back button
             finish();
-            overridePendingTransition(R.anim.none, R.anim.exit_rev);
         }
         else if(id == R.id.location_save)
         {

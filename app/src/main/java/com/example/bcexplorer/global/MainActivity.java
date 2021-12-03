@@ -1,32 +1,27 @@
-package com.example.bcexplorer;
+package com.example.bcexplorer.global;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.AppDatabase;
-import com.example.bcexplorer.database.Location;
 import com.example.bcexplorer.global.BottomNavigationViewPagerAdapter;
 import com.example.bcexplorer.global.LocationFragment;
 import com.example.bcexplorer.home.HomeFragment;
 import com.example.bcexplorer.info.CreditsFragment;
 import com.example.bcexplorer.info.InfoFragment;
+import com.example.bcexplorer.saved.SavedFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

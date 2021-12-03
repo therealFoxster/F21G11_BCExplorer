@@ -1,7 +1,6 @@
 package com.example.bcexplorer.global;
 
-import static com.example.bcexplorer.MainActivity.bottomNavigationViewPager;
-import static com.example.bcexplorer.MainActivity.fragmentManager;
+import static com.example.bcexplorer.global.MainActivity.fragmentManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,14 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.telephony.PhoneNumberUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,10 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
-import com.example.bcexplorer.saved.SavedItemRecyclerViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,8 +41,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -396,7 +387,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(getLocationFromAddress(getContext(), locationAddress)).title(locationName));
+        map.addMarker(new MarkerOptions().position(getLocationFromAddress(getContext(), locationAddress)).title(locationAddress));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(getContext(), locationAddress), 15));
     }
 

@@ -1,7 +1,5 @@
 package com.example.bcexplorer.global;
 
-import static com.example.bcexplorer.MainActivity.fragmentManager;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -266,7 +263,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(getLocationFromAddress(this, locationAddress)).title(locationName));
+        map.addMarker(new MarkerOptions().position(getLocationFromAddress(this, locationAddress)).title(locationAddress));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(this, locationAddress), 15));
     }
 

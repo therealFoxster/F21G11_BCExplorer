@@ -67,7 +67,7 @@ public class CreditsItemDetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                overridePendingTransition(R.anim.enter_rev, R.anim.exit_rev);
+                overridePendingTransition(R.anim.none, R.anim.exit_rev);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
