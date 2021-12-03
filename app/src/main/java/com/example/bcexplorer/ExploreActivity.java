@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,18 +19,30 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bcexplorer.databinding.ActivityExploreBinding;
+import com.example.bcexplorer.global.CustomMapView;
 import com.example.bcexplorer.utils.Utils;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
-public class ExploreActivity extends AppCompatActivity {
+public class ExploreActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+
     private ActivityExploreBinding b;
     String LIST_TYPE = Constants.WHITE_ROCK;
     String WHATS_NEW_LIST_TYPE = Constants.WHATS_NEW_WHITE_ROCK;
     String PHONE_NUMBER = "";
     String WEBSITE = "";
     String EMAIL = "";
-
+    LatLng locationLatLng;
+    String locationName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +52,7 @@ public class ExploreActivity extends AppCompatActivity {
 
 
         LIST_TYPE = getIntent().getStringExtra(Constants.PARAMS);
+
 
         if (LIST_TYPE.equals(Constants.VANCOUVER)) {
             Objects.requireNonNull(getSupportActionBar())
@@ -52,7 +69,6 @@ public class ExploreActivity extends AppCompatActivity {
             WEBSITE = "https://www.glowbalgroup.com/blackblue/";
 
             WHATS_NEW_LIST_TYPE = Constants.WHATS_NEW_VANCOUVER;
-
         }
 
         if (LIST_TYPE.equals(Constants.WHITE_ROCK)) {
@@ -68,7 +84,6 @@ public class ExploreActivity extends AppCompatActivity {
             PHONE_NUMBER = "+521234567891";
             EMAIL = "info@bluefrogstudios.ca";
             WEBSITE = "https://www.bluefrogstudios.ca/thepond.html";
-
 
             WHATS_NEW_LIST_TYPE = Constants.WHATS_NEW_WHITE_ROCK;
 
@@ -88,14 +103,14 @@ public class ExploreActivity extends AppCompatActivity {
             EMAIL = "info@dforgedaxe.ca";
             WEBSITE = "https://www.forgedaxe.ca/";
 
-
             WHATS_NEW_LIST_TYPE = Constants.WHATS_NEW_WHISTLER;
-
-
         }
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        locationName = b.titleTxt.getText().toString();
+        locationLatLng = getLocationFromAddress(this, b.addressTxt.getText().toString());
 
 
         b.buttonEmail.setOnClickListener((View view1) -> {
@@ -109,7 +124,7 @@ public class ExploreActivity extends AppCompatActivity {
                 emailIntent.setType("text/plain");
 
                 // Extras
-                emailIntent.putExtra(Intent.EXTRA_EMAIL,EMAIL);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "Content");
 
@@ -142,7 +157,22 @@ public class ExploreActivity extends AppCompatActivity {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(WEBSITE)));
         });
 
+        initGoogleMap(savedInstanceState);
 
+    }
+
+    private void initGoogleMap(Bundle savedInstanceState) {
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+
+        b.mapView2.onCreate(mapViewBundle);
+
+        Handler handler = new Handler(getMainLooper());
+        handler.post(() -> {
+            b.mapView2.getMapAsync(this);
+        });
     }
 
 
@@ -151,12 +181,9 @@ public class ExploreActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_location_view, menu);
         MenuItem item = menu.findItem(R.id.location_save);
 
-        if(Utils.getBoolean(this, WHATS_NEW_LIST_TYPE))
-        {
+        if (Utils.getBoolean(this, WHATS_NEW_LIST_TYPE)) {
             item.setIcon(R.drawable.ic_location_unsave);
-        }
-        else
-        {
+        } else {
             item.setIcon(R.drawable.ic_location_save);
         }
 
@@ -171,10 +198,8 @@ public class ExploreActivity extends AppCompatActivity {
 
         if (id == android.R.id.home) { // Back button
             finish();
-            overridePendingTransition(R.anim.none, R.anim.exit_rev);
-        }
-        else if(id == R.id.location_save)
-        {
+            overridePendingTransition(R.anim.enter_rev, R.anim.exit_rev);
+        } else if (id == R.id.location_save) {
             // If save icon is visible (location is not saved)
             if (item.getIcon().getConstantState() == getResources().getDrawable(R.drawable.ic_location_save).getConstantState()) {
                 item.setIcon(R.drawable.ic_location_unsave); // Change icon to unsave
@@ -194,5 +219,81 @@ public class ExploreActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @NonNull
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        b.mapView2.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        b.mapView2.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        b.mapView2.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        b.mapView2.onStop();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(locationLatLng).title(locationName));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 15));
+    }
+
+    @Override
+    public void onPause() {
+        b.mapView2.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        b.mapView2.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        b.mapView2.onLowMemory();
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder geocoder = new Geocoder(context);
+        List<Address> addressList;
+        LatLng location = null;
+
+        try {
+            addressList = geocoder.getFromLocationName(strAddress, 5);
+            if (addressList == null) {
+                return null;
+            }
+            Address address = addressList.get(0);
+            location = new LatLng(address.getLatitude(), address.getLongitude());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return location;
     }
 }

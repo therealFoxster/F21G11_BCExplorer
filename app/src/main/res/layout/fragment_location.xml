@@ -129,15 +129,12 @@
                 android:layout_marginRight="22dp"
                 android:layout_marginTop="18dp">
 
-                <TextView
-                    android:id="@+id/mapsPlaceHolder"
+                <com.example.bcexplorer.global.CustomMapView
+                    android:id="@+id/mapView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/purple_500"
-                    android:gravity="center"
-                    android:text="Maps placeholder"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/text_body" />
+                    android:clickable="true"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

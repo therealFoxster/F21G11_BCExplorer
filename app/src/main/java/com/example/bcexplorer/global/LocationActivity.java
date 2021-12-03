@@ -8,10 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,14 +29,25 @@ import android.widget.Toast;
 import com.example.bcexplorer.MainActivity;
 import com.example.bcexplorer.R;
 import com.example.bcexplorer.database.Location;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    CustomMapView mMapView;
+
     private static String locationID;
     private static String locationName;
     private static boolean locationIsSaved = false;
+    private static String locationAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +68,11 @@ public class LocationActivity extends AppCompatActivity {
             Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
             locationName = location.getLocationName();
             locationIsSaved = location.isSaved();
+            locationAddress = location.getAddress();
         });
+
+        mMapView = findViewById(R.id.mapViewLocation);
+        initGoogleMap(savedInstanceState);
 
         executorService.execute(() -> {
             Location location = MainActivity.database.locationDAO().getLocationWithID(locationID);
@@ -81,8 +100,6 @@ public class LocationActivity extends AppCompatActivity {
             viewPagerLocationImages.setClipToPadding(false);
             viewPagerLocationImages.setPadding(80,0, 80, 0);
             viewPagerLocationImages.setPageMargin(-10);
-
-            // TODO: Setup maps view
 
             TextView textViewMaps = findViewById(R.id.textViewLocationMaps);
             textViewMaps.setText("Getting to " + location.getLocationName());
@@ -148,6 +165,20 @@ public class LocationActivity extends AppCompatActivity {
         });
     }
 
+    private void initGoogleMap(Bundle savedInstanceState) {
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+
+        mMapView.onCreate(mapViewBundle);
+
+        Handler handler = new Handler(this.getMainLooper());
+        handler.post(()-> {
+            mMapView.getMapAsync(this);
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -201,5 +232,80 @@ public class LocationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mMapView.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mMapView.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mMapView.onStop();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(getLocationFromAddress(this, locationAddress)).title(locationName));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress(this, locationAddress), 15));
+    }
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder geocoder = new Geocoder(context);
+        List<Address> addressList;
+        LatLng location = null;
+
+        try {
+            addressList = geocoder.getFromLocationName(strAddress, 5);
+            if (addressList == null) {
+                return null;
+            }
+            Address address = addressList.get(0);
+            location = new LatLng(address.getLatitude(), address.getLongitude() );
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return location;
     }
 }
